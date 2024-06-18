@@ -13,8 +13,8 @@ export const SIDEBAR_ITEMS: SidebarItemsType[] = [
     icon: Icons.tasks,
   },
   {
-    title: "Calendar",
-    href: "/dashboard/calendar",
+    title: "Views",
+    href: "/dashboard/views",
     icon: Icons.calendar,
   },
   {
