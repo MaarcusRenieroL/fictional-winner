@@ -18,24 +18,9 @@ export const SIDEBAR_ITEMS: SidebarItemsType[] = [
     icon: Icons.calendar,
   },
   {
-    title: "Activity",
-    href: "/dashboard/activity",
-    icon: Icons.activity,
-  },
-  {
-    title: "Notifications",
-    href: "/dashboard/notifications",
-    icon: Icons.notifications,
-  },
-  {
     title: "Settings",
     href: "/dashboard/settings",
     icon: Icons.settings,
-  },
-  {
-    title: "Profile",
-    href: "/dashboard/profile",
-    icon: Icons.profile,
   },
 ];
 
