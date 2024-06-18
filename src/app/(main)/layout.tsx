@@ -19,7 +19,7 @@ export default function DashboardLayout({
     <html lang="en">
       <body className={inter.className}>
         <Navbar />
-        {children}
+        <main className="p-10">{children}</main>
       </body>
     </html>
   );
