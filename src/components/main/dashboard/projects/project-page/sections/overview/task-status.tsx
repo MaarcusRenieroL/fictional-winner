@@ -1,20 +1,20 @@
-"use client";
+import { TaskTableShell } from "@/components/main/dashboard/tasks/tasks-shell";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { MY_TASKS, data } from "@/lib/constants";
+
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
 import { Edit, Trash } from "lucide-react";
 import React, { FC, useMemo } from "react";
-import { useModal } from "@/components/providers/modal-provider";
 import { Tasks } from "@/lib/types";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CustomDeleteAlertDailog } from "@/components/custom-delete-alert-dialog";
 import { DataTable } from "@/components/data-table";
+import { useModal } from "@/components/providers/modal-provider";
 
-interface TaskTableShellProps {
-  data: Tasks[];
-}
-
-export const TaskTableShell: FC<TaskTableShellProps> = ({ data }) => {
+export const TaskStatus: FC = () => {
   const { setOpen } = useModal();
   const TasksColumnDef = useMemo<ColumnDef<Tasks>[]>(
     () => [
@@ -133,22 +133,41 @@ export const TaskTableShell: FC<TaskTableShellProps> = ({ data }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [data],
   );
+
   return (
-    <DataTable
-      data={data ?? []}
-      columns={TasksColumnDef}
-      filterableColumns={[]}
-      searchPlaceholder="Search Posts..."
-      messages={{
-        filteredDataNotFoundMessage: {
-          title: "No posts Found!",
-          description: "Add some posts to get started!",
-        },
-        emptyDataMessage: {
-          title: "No posts Found!",
-          description: "Add some posts to get started!",
-        },
-      }}
-    />
+    <Card className="hover:shadow-xl transition-all duration-500">
+      <CardHeader>
+        <CardTitle>Task Status</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <Tabs defaultValue="all-tasks">
+          <TabsList>
+            <TabsTrigger value="all-tasks">All tasks</TabsTrigger>
+            <TabsTrigger value="my-tasks">My tasks</TabsTrigger>
+          </TabsList>
+          <TabsContent value="all-tasks" className="mt-5">
+            <TaskTableShell data={data} />
+          </TabsContent>
+          <TabsContent value="my-tasks" className="mt-5">
+            <DataTable
+              data={MY_TASKS ?? []}
+              columns={TasksColumnDef}
+              filterableColumns={[]}
+              searchPlaceholder="Search Posts..."
+              messages={{
+                filteredDataNotFoundMessage: {
+                  title: "No posts Found!",
+                  description: "Add some posts to get started!",
+                },
+                emptyDataMessage: {
+                  title: "No posts Found!",
+                  description: "Add some posts to get started!",
+                },
+              }}
+            />
+          </TabsContent>
+        </Tabs>
+      </CardContent>
+    </Card>
   );
 };

@@ -10,7 +10,7 @@ export default function DashboardPage() {
         <StatsCard title="Completed" count={98} difference={5} />
         <StatsCard title="Overdue" count={12} difference={5} />
       </div>
-      <div className="mt-5 grid md:grid-cols-2 grid-cols-1 gap-5">
+      <div className="mt-5 grid xl:grid-cols-2 grid-cols-1 gap-5">
         <TaskGraph />
         <TasksTable />
       </div>

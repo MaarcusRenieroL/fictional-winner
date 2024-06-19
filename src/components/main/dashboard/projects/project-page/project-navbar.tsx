@@ -1,5 +1,6 @@
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { FC } from "react";
+import { Overview } from "./sections/overview";
 
 export const ProjectNavbar: FC = () => {
   return (
@@ -23,12 +24,12 @@ export const ProjectNavbar: FC = () => {
         <TabsTrigger className="w-full" value="files">
           Files
         </TabsTrigger>
-        <TabsTrigger className="w-full" value="messages">
-          Messages
+        <TabsTrigger className="w-full" value="settings">
+          Settings
         </TabsTrigger>
       </TabsList>
       <TabsContent className="mt-5" value="overview">
-        Overview
+        <Overview />
       </TabsContent>
       <TabsContent className="mt-5" value="list">
         List
@@ -45,8 +46,8 @@ export const ProjectNavbar: FC = () => {
       <TabsContent className="mt-5" value="files">
         Files
       </TabsContent>
-      <TabsContent className="mt-5" value="messages">
-        Messages
+      <TabsContent className="mt-5" value="settings">
+        Settings
       </TabsContent>
     </Tabs>
   );

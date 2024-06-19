@@ -9,7 +9,7 @@ export type SidebarItemsType = {
 };
 
 export type Tasks = {
-  id: number;
+  id: string;
   title: string;
   description: string;
   status: string;
