@@ -18,6 +18,11 @@ export const SIDEBAR_ITEMS: SidebarItemsType[] = [
     icon: Icons.calendar,
   },
   {
+    title: "Projects",
+    href: "/dashboard/projects",
+    icon: Icons.projects,
+  },
+  {
     title: "Settings",
     href: "/dashboard/settings",
     icon: Icons.settings,
@@ -187,5 +192,189 @@ export const data = [
     status: "In Progress",
     priority: "High",
     dueDate: "2024-06-20",
+  },
+];
+
+export const PROJECT_LIST = [
+  {
+    title: "E-commerce Platform Upgrade",
+    description:
+      "Upgrade the e-commerce platform to support new payment methods and enhance security features.",
+    scheduledTaskCount: 9,
+    ongoingTaskCount: 3,
+    completedTaskCount: 11,
+    teamMembers: ["Alice Johnson", "Bob Smith", "Charlie Brown", "David White"],
+  },
+  {
+    title: "AI Chatbot Integration",
+    description:
+      "Integrate an AI chatbot into the customer service system to handle common inquiries and improve response times.",
+    scheduledTaskCount: 7,
+    ongoingTaskCount: 4,
+    completedTaskCount: 10,
+    teamMembers: ["Eva Green", "George Martinez", "Hannah Lee", "Ian Thompson"],
+  },
+  {
+    title: "Cloud Migration",
+    description:
+      "Migrate company data and applications to a cloud-based infrastructure to improve scalability and reduce costs.",
+    scheduledTaskCount: 12,
+    ongoingTaskCount: 5,
+    completedTaskCount: 8,
+    teamMembers: ["Jack Wilson", "Karen Davis", "Liam Taylor"],
+  },
+  {
+    title: "New Product Development",
+    description:
+      "Develop and launch a new product line focusing on sustainability and eco-friendly materials.",
+    scheduledTaskCount: 15,
+    ongoingTaskCount: 6,
+    completedTaskCount: 14,
+    teamMembers: ["Mia Anderson", "Noah Harris", "Olivia Moore", "Paul Walker"],
+  },
+  {
+    title: "Cybersecurity Initiative",
+    description:
+      "Implement a comprehensive cybersecurity program to protect against potential threats and vulnerabilities.",
+    scheduledTaskCount: 5,
+    ongoingTaskCount: 3,
+    completedTaskCount: 7,
+    teamMembers: ["Quinn Adams", "Rachel Lewis", "Samuel Clark"],
+  },
+  {
+    title: "Mobile App Redesign",
+    description:
+      "Redesign the mobile app interface to improve user experience and add new features requested by users.",
+    scheduledTaskCount: 10,
+    ongoingTaskCount: 4,
+    completedTaskCount: 12,
+    teamMembers: [
+      "Tina Robinson",
+      "Umar Khan",
+      "Victoria Peterson",
+      "William Bell",
+    ],
+  },
+  {
+    title: "Global Expansion Strategy",
+    description:
+      "Develop a strategy for expanding business operations into new international markets.",
+    scheduledTaskCount: 8,
+    ongoingTaskCount: 2,
+    completedTaskCount: 5,
+    teamMembers: ["Xander Reed", "Yvonne Collins", "Zara Mitchell"],
+  },
+  {
+    title: "Internal Software Update",
+    description:
+      "Update internal software tools to the latest versions to enhance performance and security.",
+    scheduledTaskCount: 6,
+    ongoingTaskCount: 3,
+    completedTaskCount: 9,
+    teamMembers: ["Alice Johnson", "Bob Smith", "Charlie Brown"],
+  },
+  {
+    title: "Sustainability Program",
+    description:
+      "Launch a company-wide sustainability program aimed at reducing waste and improving energy efficiency.",
+    scheduledTaskCount: 7,
+    ongoingTaskCount: 5,
+    completedTaskCount: 10,
+    teamMembers: ["David White", "Eva Green", "George Martinez", "Hannah Lee"],
+  },
+  {
+    title: "Employee Wellness Initiative",
+    description:
+      "Introduce a wellness initiative to promote health and well-being among employees.",
+    scheduledTaskCount: 4,
+    ongoingTaskCount: 2,
+    completedTaskCount: 6,
+    teamMembers: ["Ian Thompson", "Jack Wilson", "Karen Davis", "Liam Taylor"],
+  },
+  {
+    title: "Customer Experience Enhancement",
+    description:
+      "Enhance the overall customer experience by streamlining processes and introducing new support channels.",
+    scheduledTaskCount: 9,
+    ongoingTaskCount: 4,
+    completedTaskCount: 11,
+    teamMembers: ["Mia Anderson", "Noah Harris", "Olivia Moore"],
+  },
+  {
+    title: "Digital Marketing Optimization",
+    description:
+      "Optimize digital marketing strategies to increase engagement and conversion rates across all platforms.",
+    scheduledTaskCount: 10,
+    ongoingTaskCount: 5,
+    completedTaskCount: 13,
+    teamMembers: ["Paul Walker", "Quinn Adams", "Rachel Lewis", "Samuel Clark"],
+  },
+  {
+    title: "Training Program Development",
+    description:
+      "Develop a comprehensive training program for new hires to ensure they are fully equipped to perform their roles.",
+    scheduledTaskCount: 6,
+    ongoingTaskCount: 3,
+    completedTaskCount: 8,
+    teamMembers: ["Tina Robinson", "Umar Khan", "Victoria Peterson"],
+  },
+  {
+    title: "Website Accessibility Improvements",
+    description:
+      "Improve website accessibility to meet compliance standards and provide a better experience for all users.",
+    scheduledTaskCount: 8,
+    ongoingTaskCount: 4,
+    completedTaskCount: 10,
+    teamMembers: [
+      "William Bell",
+      "Xander Reed",
+      "Yvonne Collins",
+      "Zara Mitchell",
+    ],
+  },
+  {
+    title: "Inventory Management System",
+    description:
+      "Implement a new inventory management system to streamline tracking and reduce stock discrepancies.",
+    scheduledTaskCount: 7,
+    ongoingTaskCount: 3,
+    completedTaskCount: 9,
+    teamMembers: ["Alice Johnson", "Bob Smith", "Charlie Brown", "David White"],
+  },
+  {
+    title: "Data Analytics Upgrade",
+    description:
+      "Upgrade data analytics tools to improve insights and support better decision-making.",
+    scheduledTaskCount: 5,
+    ongoingTaskCount: 2,
+    completedTaskCount: 7,
+    teamMembers: ["Eva Green", "George Martinez", "Hannah Lee"],
+  },
+  {
+    title: "Customer Loyalty Program",
+    description:
+      "Create a customer loyalty program to reward repeat business and increase customer retention.",
+    scheduledTaskCount: 9,
+    ongoingTaskCount: 4,
+    completedTaskCount: 12,
+    teamMembers: ["Ian Thompson", "Jack Wilson", "Karen Davis"],
+  },
+  {
+    title: "Operational Efficiency Project",
+    description:
+      "Identify and implement changes to improve operational efficiency and reduce costs.",
+    scheduledTaskCount: 6,
+    ongoingTaskCount: 3,
+    completedTaskCount: 8,
+    teamMembers: ["Liam Taylor", "Mia Anderson", "Noah Harris", "Olivia Moore"],
+  },
+  {
+    title: "Social Media Strategy",
+    description:
+      "Develop and implement a social media strategy to increase brand awareness and engagement.",
+    scheduledTaskCount: 8,
+    ongoingTaskCount: 5,
+    completedTaskCount: 11,
+    teamMembers: ["Paul Walker", "Quinn Adams", "Rachel Lewis", "Samuel Clark"],
   },
 ];
