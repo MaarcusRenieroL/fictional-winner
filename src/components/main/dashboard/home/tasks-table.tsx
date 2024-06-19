@@ -1,8 +1,7 @@
 "use client";
 
-import { DataTable } from "@/components/data-table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { TasksColumn } from "@/lib/columns";
+import { TaskTableShell } from "../tasks/tasks-shell";
 import { data } from "@/lib/constants";
 import { FC } from "react";
 
@@ -13,7 +12,7 @@ export const TasksTable: FC = () => {
         <CardTitle>Pending Tasks</CardTitle>
       </CardHeader>
       <CardContent>
-        <DataTable data={data ?? []} columns={TasksColumn} />
+        <TaskTableShell data={data} />
       </CardContent>
     </Card>
   );

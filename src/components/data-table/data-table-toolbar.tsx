@@ -1,98 +1,125 @@
 "use client";
-
-import type { Table } from "@tanstack/react-table";
-
+import { CalendarDateRangePicker } from "@/components/data-table/date-range-picker";
+import { TooltipComponent } from "@/components/data-table/tooltip";
+import { cn } from "@/lib/utils";
+import {
+  DataTableFilterableColumn,
+  DataTableSearchableColumn,
+  DataTableDownloadRowsButtonType,
+} from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-
-import { ListRestart } from "lucide-react";
-import { DataTableViewOptions } from "@/components/data-table/data-table-view-options";
-import { DataTableFacetedFilter } from "@/components/data-table/data-table-faceted-filter";
+import { Cross2Icon } from "@radix-ui/react-icons";
+import { Table } from "@tanstack/react-table";
+import { RefreshCw } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { DataTableFacetedFilter } from "./data-table-faceted-filter";
+import { DataTableViewOptions } from "./data-table-view-options";
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
-  searchColumnName?: string;
-  searchColumnPlaceholder?: string;
-  facetedFilterColumn1?: string;
-  facetedFilterColumn2?: string;
-  facetedFilterColumn3?: string;
-  facetedFilterColumnOptions1?: { label: string; value: string }[];
-  facetedFilterColumnOptions2?: { label: string; value: string }[];
-  facetedFilterColumnOptions3?: { label: string; value: string }[];
+  filterableColumns?: DataTableFilterableColumn<TData>[];
+  searchableColumns?: DataTableSearchableColumn<TData>[];
+  searchPlaceholder?: string;
+  DownloadRowAction?: DataTableDownloadRowsButtonType<TData>;
 }
 
 export function DataTableToolbar<TData>({
   table,
-  searchColumnPlaceholder,
-  facetedFilterColumn1,
-  facetedFilterColumn2,
-  facetedFilterColumn3,
-  facetedFilterColumnOptions1,
-  facetedFilterColumnOptions2,
-  facetedFilterColumnOptions3,
-  searchColumnName,
+  filterableColumns = [],
+  searchableColumns = [],
+  searchPlaceholder = "Search here...",
+  DownloadRowAction,
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0;
-  const title1 = `${facetedFilterColumn1
-    ?.charAt(0)
-    .toUpperCase()}${facetedFilterColumn1?.slice(1)}`;
-  const title2 = `${facetedFilterColumn2
-    ?.charAt(0)
-    .toUpperCase()}${facetedFilterColumn2?.slice(1)}`;
-  const title3 = `${facetedFilterColumn3
-    ?.charAt(0)
-    .toUpperCase()}${facetedFilterColumn3?.slice(1)}`;
+  const [isRotating, setRotating] = useState(false);
+  const router = useRouter();
+  const hasSearchableColumns = searchableColumns.length > 0;
+
+  const handleRefreshClick = () => {
+    setRotating(true);
+    setTimeout(() => {
+      router.refresh();
+      setRotating(false);
+    }, 1000);
+  };
+
   return (
-    <div className="flex items-center justify-center">
-      <div className="flex flex-1 items-center space-x-2">
-        {searchColumnName && (
-          <Input
-            placeholder={searchColumnPlaceholder}
-            value={
-              (table.getColumn(searchColumnName)?.getFilterValue() as string) ??
-              ""
-            }
-            onChange={(event) =>
-              table
-                .getColumn(searchColumnName)
-                ?.setFilterValue(event.target.value)
-            }
-            className="h-8 w-[150px] lg:w-[250px]"
-          />
-        )}
-        {facetedFilterColumn1 && facetedFilterColumnOptions1 && (
-          <DataTableFacetedFilter
-            column={table.getColumn(facetedFilterColumn1)}
-            title={title1}
-            options={facetedFilterColumnOptions1}
-          />
-        )}
-        {facetedFilterColumn2 && facetedFilterColumnOptions2 && (
-          <DataTableFacetedFilter
-            column={table.getColumn(facetedFilterColumn2)}
-            title={title2}
-            options={facetedFilterColumnOptions2}
-          />
-        )}
-        {facetedFilterColumn3 && facetedFilterColumnOptions3 && (
-          <DataTableFacetedFilter
-            column={table.getColumn(facetedFilterColumn3)}
-            title={title3}
-            options={facetedFilterColumnOptions3}
-          />
-        )}
-        {isFiltered && (
-          <Button
-            variant="ghost"
-            onClick={() => table.resetColumnFilters()}
-            className="h-8 px-2 lg:px-3"
-          >
-            Reset
-            <ListRestart className="ml-2 h-4 w-4" />
-          </Button>
-        )}
+    <div className="flex flex-col-reverse justify-between items-stretch gap-2">
+      <div className="flex flex-col-reverse md:flex-row md:items-center justify-between">
+        <div className="flex flex-wrap mt-1 md:mt-0 md:flex-row flex-1 md:items-center justify-start gap-1">
+          {hasSearchableColumns ? (
+            // Render individual inputs for searchable columns
+            searchableColumns.map(
+              (column) =>
+                table.getColumn(column.id ? String(column.id) : "") && (
+                  <Input
+                    key={String(column.id)}
+                    placeholder={`Filter ${column.title}...`}
+                    value={
+                      (table
+                        .getColumn(String(column.id))
+                        ?.getFilterValue() as string) ?? ""
+                    }
+                    onChange={(event) =>
+                      table
+                        .getColumn(String(column.id))
+                        ?.setFilterValue(event.target.value)
+                    }
+                    className="h-8 grow md:grow-0 w-[150px] lg:w-[250px]"
+                  />
+                ),
+            )
+          ) : (
+            // Render a single input for global filtering
+            <Input
+              placeholder={searchPlaceholder}
+              value={table.getState().globalFilter}
+              onChange={(e) => table.setGlobalFilter(String(e.target.value))}
+              className="h-8 grow md:grow-0 w-[150px] lg:w-[250px]"
+            />
+          )}
+          {DownloadRowAction && <DownloadRowAction table={table} />}
+          <TooltipComponent message="Refetch Data" delayDuration={250}>
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-8 w-8 p-2 border-dashed"
+              onClick={handleRefreshClick}
+            >
+              <RefreshCw
+                color="#000"
+                className={cn("", isRotating ? "animate-spin" : "")}
+              />
+            </Button>
+          </TooltipComponent>
+          {filterableColumns.length > 0 &&
+            filterableColumns.map(
+              (column) =>
+                table.getColumn(column.id ? String(column.id) : "") && (
+                  <DataTableFacetedFilter
+                    key={String(column.id)}
+                    column={table.getColumn(column.id ? String(column.id) : "")}
+                    title={column.title}
+                    options={column.options}
+                  />
+                ),
+            )}
+        </div>
+        <CalendarDateRangePicker />
+        <DataTableViewOptions table={table} />
       </div>
-      <DataTableViewOptions table={table} />
+      {isFiltered && (
+        <Button
+          variant="destructive"
+          onClick={() => table.resetColumnFilters()}
+          className="h-8 px-2 lg:px-3 inline-flex self-end w-fit border border-destructive-foreground/50"
+        >
+          Reset
+          <Cross2Icon className="ml-2 h-4 w-4" />
+        </Button>
+      )}
     </div>
   );
 }
