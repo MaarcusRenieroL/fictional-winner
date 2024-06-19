@@ -1,3 +1,4 @@
+import { KanbanBoard } from "@/components/main/dashboard/views/kanban";
 import { Tabs, TabsList, TabsContent, TabsTrigger } from "@/components/ui/tabs";
 
 export default function ViewsPage() {
@@ -15,7 +16,7 @@ export default function ViewsPage() {
             Calendar view here
           </TabsContent>
           <TabsContent className="mt-5" value="kanban">
-            Kanban view here
+            <KanbanBoard />
           </TabsContent>
           <TabsContent className="mt-5" value="timeline">
             Timeline view here
