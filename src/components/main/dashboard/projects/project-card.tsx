@@ -15,9 +15,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
+import Link from "next/link";
 import { FC } from "react";
 
 type Props = {
+  id: string;
   title: string;
   description: string;
   scheduledTaskCount: number;
@@ -33,6 +35,7 @@ export const ProjectCard: FC<Props> = ({
   ongoingTaskCount,
   completedTaskCount,
   teamMembers,
+  id,
 }) => {
   return (
     <Card className="flex flex-col justify-between  w-full hover:shadow-2xl transition-all duration-500">
@@ -74,7 +77,9 @@ export const ProjectCard: FC<Props> = ({
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuItem>View</DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href={`/dashboard/projects/${id}`}>View</Link>
+                </DropdownMenuItem>
                 <DropdownMenuItem>Edit</DropdownMenuItem>
                 <DropdownMenuItem>Delete</DropdownMenuItem>
               </DropdownMenuContent>

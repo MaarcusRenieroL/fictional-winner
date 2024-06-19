@@ -7,6 +7,7 @@ export const ProjectList: FC = () => {
     <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-5">
       {PROJECT_LIST.map((project) => (
         <ProjectCard
+          id={project.id}
           key={project.title}
           title={project.title}
           description={project.description}

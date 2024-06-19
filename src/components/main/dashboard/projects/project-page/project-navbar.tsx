@@ -1,0 +1,53 @@
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { FC } from "react";
+
+export const ProjectNavbar: FC = () => {
+  return (
+    <Tabs className="mt-5" defaultValue="overview">
+      <TabsList className="w-full">
+        <TabsTrigger className="w-full" value="overview">
+          Overview
+        </TabsTrigger>
+        <TabsTrigger className="w-full" value="list">
+          List
+        </TabsTrigger>
+        <TabsTrigger className="w-full" value="board">
+          Board
+        </TabsTrigger>
+        <TabsTrigger className="w-full" value="timeline">
+          Timeline
+        </TabsTrigger>
+        <TabsTrigger className="w-full" value="calendar">
+          Calendar
+        </TabsTrigger>
+        <TabsTrigger className="w-full" value="files">
+          Files
+        </TabsTrigger>
+        <TabsTrigger className="w-full" value="messages">
+          Messages
+        </TabsTrigger>
+      </TabsList>
+      <TabsContent className="mt-5" value="overview">
+        Overview
+      </TabsContent>
+      <TabsContent className="mt-5" value="list">
+        List
+      </TabsContent>
+      <TabsContent className="mt-5" value="board">
+        Board
+      </TabsContent>
+      <TabsContent className="mt-5" value="timeline">
+        Timeline
+      </TabsContent>
+      <TabsContent className="mt-5" value="calendar">
+        Calendar
+      </TabsContent>
+      <TabsContent className="mt-5" value="files">
+        Files
+      </TabsContent>
+      <TabsContent className="mt-5" value="messages">
+        Messages
+      </TabsContent>
+    </Tabs>
+  );
+};

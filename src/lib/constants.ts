@@ -202,6 +202,7 @@ export const data = [
 
 export const PROJECT_LIST = [
   {
+    id: "1",
     title: "E-commerce Platform Upgrade",
     description:
       "Upgrade the e-commerce platform to support new payment methods and enhance security features.",
@@ -211,6 +212,7 @@ export const PROJECT_LIST = [
     teamMembers: ["Alice Johnson", "Bob Smith", "Charlie Brown", "David White"],
   },
   {
+    id: "2",
     title: "AI Chatbot Integration",
     description:
       "Integrate an AI chatbot into the customer service system to handle common inquiries and improve response times.",
@@ -220,6 +222,7 @@ export const PROJECT_LIST = [
     teamMembers: ["Eva Green", "George Martinez", "Hannah Lee", "Ian Thompson"],
   },
   {
+    id: "3",
     title: "Cloud Migration",
     description:
       "Migrate company data and applications to a cloud-based infrastructure to improve scalability and reduce costs.",
@@ -229,6 +232,8 @@ export const PROJECT_LIST = [
     teamMembers: ["Jack Wilson", "Karen Davis", "Liam Taylor"],
   },
   {
+    id: "4",
+
     title: "New Product Development",
     description:
       "Develop and launch a new product line focusing on sustainability and eco-friendly materials.",
@@ -238,6 +243,7 @@ export const PROJECT_LIST = [
     teamMembers: ["Mia Anderson", "Noah Harris", "Olivia Moore", "Paul Walker"],
   },
   {
+    id: "5",
     title: "Cybersecurity Initiative",
     description:
       "Implement a comprehensive cybersecurity program to protect against potential threats and vulnerabilities.",
@@ -247,6 +253,7 @@ export const PROJECT_LIST = [
     teamMembers: ["Quinn Adams", "Rachel Lewis", "Samuel Clark"],
   },
   {
+    id: "6",
     title: "Mobile App Redesign",
     description:
       "Redesign the mobile app interface to improve user experience and add new features requested by users.",
@@ -261,6 +268,7 @@ export const PROJECT_LIST = [
     ],
   },
   {
+    id: "7",
     title: "Global Expansion Strategy",
     description:
       "Develop a strategy for expanding business operations into new international markets.",
@@ -270,6 +278,7 @@ export const PROJECT_LIST = [
     teamMembers: ["Xander Reed", "Yvonne Collins", "Zara Mitchell"],
   },
   {
+    id: "8",
     title: "Internal Software Update",
     description:
       "Update internal software tools to the latest versions to enhance performance and security.",
@@ -279,6 +288,7 @@ export const PROJECT_LIST = [
     teamMembers: ["Alice Johnson", "Bob Smith", "Charlie Brown"],
   },
   {
+    id: "9",
     title: "Sustainability Program",
     description:
       "Launch a company-wide sustainability program aimed at reducing waste and improving energy efficiency.",
@@ -288,6 +298,7 @@ export const PROJECT_LIST = [
     teamMembers: ["David White", "Eva Green", "George Martinez", "Hannah Lee"],
   },
   {
+    id: "10",
     title: "Employee Wellness Initiative",
     description:
       "Introduce a wellness initiative to promote health and well-being among employees.",
@@ -297,6 +308,7 @@ export const PROJECT_LIST = [
     teamMembers: ["Ian Thompson", "Jack Wilson", "Karen Davis", "Liam Taylor"],
   },
   {
+    id: "11",
     title: "Customer Experience Enhancement",
     description:
       "Enhance the overall customer experience by streamlining processes and introducing new support channels.",
@@ -306,6 +318,7 @@ export const PROJECT_LIST = [
     teamMembers: ["Mia Anderson", "Noah Harris", "Olivia Moore"],
   },
   {
+    id: "12",
     title: "Digital Marketing Optimization",
     description:
       "Optimize digital marketing strategies to increase engagement and conversion rates across all platforms.",
@@ -315,6 +328,7 @@ export const PROJECT_LIST = [
     teamMembers: ["Paul Walker", "Quinn Adams", "Rachel Lewis", "Samuel Clark"],
   },
   {
+    id: "13",
     title: "Training Program Development",
     description:
       "Develop a comprehensive training program for new hires to ensure they are fully equipped to perform their roles.",
@@ -324,6 +338,7 @@ export const PROJECT_LIST = [
     teamMembers: ["Tina Robinson", "Umar Khan", "Victoria Peterson"],
   },
   {
+    id: "14",
     title: "Website Accessibility Improvements",
     description:
       "Improve website accessibility to meet compliance standards and provide a better experience for all users.",
@@ -338,6 +353,7 @@ export const PROJECT_LIST = [
     ],
   },
   {
+    id: "15",
     title: "Inventory Management System",
     description:
       "Implement a new inventory management system to streamline tracking and reduce stock discrepancies.",
@@ -347,6 +363,7 @@ export const PROJECT_LIST = [
     teamMembers: ["Alice Johnson", "Bob Smith", "Charlie Brown", "David White"],
   },
   {
+    id: "16",
     title: "Data Analytics Upgrade",
     description:
       "Upgrade data analytics tools to improve insights and support better decision-making.",
@@ -356,6 +373,7 @@ export const PROJECT_LIST = [
     teamMembers: ["Eva Green", "George Martinez", "Hannah Lee"],
   },
   {
+    id: "17",
     title: "Customer Loyalty Program",
     description:
       "Create a customer loyalty program to reward repeat business and increase customer retention.",
@@ -365,6 +383,7 @@ export const PROJECT_LIST = [
     teamMembers: ["Ian Thompson", "Jack Wilson", "Karen Davis"],
   },
   {
+    id: "18",
     title: "Operational Efficiency Project",
     description:
       "Identify and implement changes to improve operational efficiency and reduce costs.",
@@ -374,6 +393,7 @@ export const PROJECT_LIST = [
     teamMembers: ["Liam Taylor", "Mia Anderson", "Noah Harris", "Olivia Moore"],
   },
   {
+    id: "19",
     title: "Social Media Strategy",
     description:
       "Develop and implement a social media strategy to increase brand awareness and engagement.",
