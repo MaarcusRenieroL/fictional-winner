@@ -17,6 +17,15 @@ export type Tasks = {
   dueDate: string;
 };
 
+export type TeamMembers = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: string;
+  phone: string;
+};
+
 // Data table Types
 export type Option = {
   label: string;
