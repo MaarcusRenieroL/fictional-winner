@@ -29,6 +29,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export default function SignUpPage() {
   const form = useForm<z.infer<typeof registerSchema>>({
@@ -41,6 +42,8 @@ export default function SignUpPage() {
       lastName: "",
     },
   });
+
+  const router = useRouter();
 
   const { mutateAsync: addNewUser } = client.user.addUser.useMutation({
     onSuccess: () => {
@@ -58,6 +61,7 @@ export default function SignUpPage() {
 
   const handleSignUp = async (data: z.infer<typeof registerSchema>) => {
     await addNewUser(data);
+    router.push("/auth/sign-in");
   };
 
   return (
@@ -206,11 +210,11 @@ export default function SignUpPage() {
           </Form>
         </CardContent>
         <CardFooter className="p-0 flex items-center justify-center w-full mt-5">
-          Don't have an account?{" "}
+          Already have an account?{" "}
           <span className="ml-3">
-            <Link href="/sign-up">
+            <Link href="/auth/sign-in">
               <Button variant="link" className="hover:underline">
-                Sign up
+                Sign in
               </Button>
             </Link>
           </span>

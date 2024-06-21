@@ -1,8 +1,11 @@
 import { StatsCard } from "@/components/main/dashboard/home/stats-card";
 import { TaskGraph } from "@/components/main/dashboard/home/task-graph";
 import { TasksTable } from "@/components/main/dashboard/home/tasks-table";
+import { authOptions, getServerAuthSession } from "@/lib/auth";
+import { getServerSession } from "next-auth";
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const data = await getServerSession(authOptions);
   return (
     <div>
       <div className="grid md:grid-cols-3 grid-cols-1 gap-5">
@@ -14,6 +17,7 @@ export default function DashboardPage() {
         <TaskGraph />
         <TasksTable />
       </div>
+      {JSON.stringify(data)}
     </div>
   );
 }
