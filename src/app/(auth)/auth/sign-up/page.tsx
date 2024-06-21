@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Card,
   CardContent,
@@ -13,8 +15,51 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { FaGoogle, FaGithub, FaApple } from "react-icons/fa";
 import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { registerSchema } from "@/lib/zod-schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { client } from "@/lib/trpc/client";
+import {
+  Form,
+  FormLabel,
+  FormItem,
+  FormField,
+  FormControl,
+  FormMessage,
+} from "@/components/ui/form";
+import { toast } from "sonner";
 
 export default function SignUpPage() {
+  const form = useForm<z.infer<typeof registerSchema>>({
+    resolver: zodResolver(registerSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+      confirmPassword: "",
+      firstName: "",
+      lastName: "",
+    },
+  });
+
+  const { mutateAsync: addNewUser } = client.user.addUser.useMutation({
+    onSuccess: () => {
+      toast("Success", {
+        description: "User created successfully",
+      });
+    },
+    onError: (error) => {
+      toast("Error", {
+        description: "Error creating user",
+      });
+      console.log(error);
+    },
+  });
+
+  const handleSignUp = async (data: z.infer<typeof registerSchema>) => {
+    await addNewUser(data);
+  };
+
   return (
     <div className="flex items-center justify-center h-screen w-screen">
       <Card className="p-10">
@@ -57,21 +102,108 @@ export default function SignUpPage() {
             <span className="text-sm text-gray-600">or</span>
             <div className="flex-grow h-px bg-gray-300" />
           </div>
-          <form>
-            <div className="space-y-2">
-              <Label>Email</Label>
-              <Input type="email" placeholder="Enter your email" />
-            </div>
-            <div className="mt-5 space-y-2">
-              <Label>Password</Label>
-              <Input type="password" placeholder="Enter your password" />
-            </div>
-            <div className="mt-5 space-y-2">
-              <Label>Confirm Password</Label>
-              <Input type="password" placeholder="Re-Enter your password" />
-            </div>
-            <Button className="w-full mt-5">Sign in</Button>
-          </form>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(handleSignUp)}>
+              <div className="space-y-2">
+                <FormField
+                  control={form.control}
+                  name="firstName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        <Label>First Name</Label>
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          type="text"
+                          placeholder="Enter your first name"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="lastName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        <Label>Last Name</Label>
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          type="text"
+                          placeholder="Enter your last name"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        <Label>Email</Label>
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          type="email"
+                          placeholder="Enter your email"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        <Label>Password</Label>
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          type="password"
+                          placeholder="Enter your password"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="confirmPassword"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        <Label>Confirm Password</Label>
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          type="password"
+                          placeholder="Re-enter your password"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <Button className="w-full mt-5">Sign in</Button>
+            </form>
+          </Form>
         </CardContent>
         <CardFooter className="p-0 flex items-center justify-center w-full mt-5">
           Don't have an account?{" "}
