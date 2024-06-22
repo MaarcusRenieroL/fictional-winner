@@ -78,3 +78,20 @@ export const tasksSchema = z.object({
     }),
   ),
 });
+
+export const projectSchema = z.object({
+  projectName: z
+    .string({
+      required_error: "Project name is required",
+    })
+    .min(4, {
+      message: "Project name should be at least 4 characters long",
+    }),
+  description: z
+    .string({
+      required_error: "Description is required",
+    })
+    .min(4, {
+      message: "Description should be at least 4 characters long",
+    }),
+});
