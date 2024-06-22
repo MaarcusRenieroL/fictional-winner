@@ -42,16 +42,16 @@ export const TaskTableShell: FC<TaskTableShellProps> = ({ data }) => {
         enableHiding: false,
       },
       {
-        id: "title",
+        id: "taskName",
         header: ({ column }) => (
           <div>
-            <DataTableColumnHeader column={column} title="Title" />
+            <DataTableColumnHeader column={column} title="Task Name" />
           </div>
         ),
         cell: ({ row }) => (
-          <div className="min-w-max mr-auto">{row.getValue("title")}</div>
+          <div className="min-w-max mr-auto">{row.getValue("taskName")}</div>
         ),
-        accessorKey: "title",
+        accessorKey: "taskName",
         enableSorting: true,
         enableHiding: true,
       },
@@ -91,7 +91,9 @@ export const TaskTableShell: FC<TaskTableShellProps> = ({ data }) => {
           </div>
         ),
         cell: ({ row }) => (
-          <div className="min-w-max">{row.getValue("dueDate")}</div>
+          <div className="min-w-max">
+            {new Date(row.getValue("dueDate")).toDateString()}
+          </div>
         ),
         accessorKey: "dueDate",
         enableSorting: true,

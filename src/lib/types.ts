@@ -10,11 +10,10 @@ export type SidebarItemsType = {
 
 export type Tasks = {
   id: string;
-  title: string;
-  description: string;
+  taskName: string;
   status: string;
   priority: string;
-  dueDate: string;
+  dueDate: Date;
 };
 
 export type TeamMembers = {

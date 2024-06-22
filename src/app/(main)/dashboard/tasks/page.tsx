@@ -1,10 +1,11 @@
-"use client";
-
 import { AddNewTask } from "@/components/main/dashboard/tasks/add-task-modal";
 import { TaskTableShell } from "@/components/main/dashboard/tasks/tasks-shell";
-import { data } from "@/lib/constants";
+import { server } from "@/lib/trpc/server";
 
-export default function TasksPage() {
+export const dynamic = "force-dynamic";
+
+export default async function TasksPage() {
+  const { data: tasks } = await server.task.getTasks();
   return (
     <div>
       <div className="flex items-center justify-between w-full">
@@ -13,7 +14,7 @@ export default function TasksPage() {
         <AddNewTask />
       </div>
       <div className="mt-10">
-        <TaskTableShell data={data} />
+        <TaskTableShell data={tasks} />
       </div>
     </div>
   );
