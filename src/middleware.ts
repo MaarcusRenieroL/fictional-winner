@@ -31,6 +31,11 @@ export default withAuth(
         return NextResponse.redirect(new URL("/dashboard", req.url));
       }
     }
+
+    const response = NextResponse.next();
+    response.headers.set("X-Pathname", pathname);
+
+    return response;
   },
   {
     callbacks: {

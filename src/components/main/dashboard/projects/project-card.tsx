@@ -1,5 +1,4 @@
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -8,28 +7,27 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { MoreHorizontal } from "lucide-react";
 import Link from "next/link";
 import { FC } from "react";
 
 type Props = {
-  id: string;
   title: string;
   description: string;
   scheduledTaskCount: number;
   ongoingTaskCount: number;
   completedTaskCount: number;
   teamMembers: string[];
+  id: string;
 };
 
 export const ProjectCard: FC<Props> = ({
+  id,
   title,
   description,
   scheduledTaskCount,
   ongoingTaskCount,
   completedTaskCount,
   teamMembers,
-  id,
 }) => {
   return (
     <Link href={`/dashboard/projects/${id}`}>

@@ -1,7 +1,9 @@
 import { AddNewProject } from "@/components/main/dashboard/projects/add-project-modal";
 import { ProjectList } from "@/components/main/dashboard/projects/project-list";
+import { server } from "@/lib/trpc/server";
 
-export default function ProjectsPage() {
+export default async function ProjectsPage() {
+  const { data: projects } = await server.project.getProjects();
   return (
     <div className="w-full">
       <div className="w-full flex items-center justify-between">
@@ -9,7 +11,7 @@ export default function ProjectsPage() {
         <AddNewProject />
       </div>
       <div className="mt-5">
-        <ProjectList />
+        <ProjectList data={projects} />
       </div>
     </div>
   );

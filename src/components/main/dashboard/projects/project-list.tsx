@@ -1,20 +1,24 @@
-import { PROJECT_LIST } from "@/lib/constants";
 import { FC } from "react";
 import { ProjectCard } from "./project-card";
+import { Project } from "@prisma/client";
 
-export const ProjectList: FC = () => {
+type Props = {
+  data: Project[];
+};
+
+export const ProjectList: FC<Props> = ({ data }) => {
   return (
     <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-5">
-      {PROJECT_LIST.map((project) => (
+      {data.map((project) => (
         <ProjectCard
           id={project.id}
-          key={project.title}
-          title={project.title}
+          key={project.projectName}
+          title={project.projectName}
           description={project.description}
-          scheduledTaskCount={project.scheduledTaskCount}
-          ongoingTaskCount={project.ongoingTaskCount}
-          completedTaskCount={project.completedTaskCount}
-          teamMembers={project.teamMembers}
+          scheduledTaskCount={0}
+          ongoingTaskCount={0}
+          completedTaskCount={0}
+          teamMembers={[]}
         />
       ))}
     </div>

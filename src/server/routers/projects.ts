@@ -4,6 +4,23 @@ import { TRPCError } from "@trpc/server";
 import { db } from "@/lib/db";
 
 export const projectRouter = router({
+  getProjects: privateProcedure.query(async ({}) => {
+    try {
+      const tasks = await db.project.findMany();
+
+      return {
+        data: tasks,
+        statusCode: 200,
+        message: "Tasks fetched successfully",
+      };
+    } catch (error) {
+      console.log(error);
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: "Something went wrong",
+      });
+    }
+  }),
   addProject: privateProcedure
     .input(projectSchema)
     .mutation(async ({ input }) => {

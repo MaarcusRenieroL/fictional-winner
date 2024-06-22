@@ -1,3 +1,5 @@
+"use client";
+
 import { TaskTableShell } from "@/components/main/dashboard/tasks/tasks-shell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -10,12 +12,9 @@ import { Edit, Trash } from "lucide-react";
 import React, { FC, useMemo } from "react";
 import { Tasks } from "@/lib/types";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
-import { CustomDeleteAlertDailog } from "@/components/custom-delete-alert-dialog";
 import { DataTable } from "@/components/data-table";
-import { useModal } from "@/components/providers/modal-provider";
 
 export const TaskStatus: FC = () => {
-  const { setOpen } = useModal();
   const TasksColumnDef = useMemo<ColumnDef<Tasks>[]>(
     () => [
       {
@@ -108,23 +107,6 @@ export const TaskStatus: FC = () => {
           <div className="flex items-center justify-evenly min-w-max space-x-5">
             <Button size="icon">
               <Edit className="h-4 w-4" />
-            </Button>
-            <Button
-              variant="destructive"
-              size="icon"
-              onClick={() => {
-                setOpen(
-                  <CustomDeleteAlertDailog
-                    title="Are you absolutely sure?"
-                    description="This action cannot be undone. This will permanently delete your post and remove your data from our servers"
-                    onDelete={() => {}}
-                    isDeleting={false}
-                    actionText="Delete Post"
-                  />,
-                );
-              }}
-            >
-              <Trash className="h-4 w-4" />
             </Button>
           </div>
         ),
