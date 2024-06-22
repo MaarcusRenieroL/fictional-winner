@@ -32,6 +32,15 @@ import {
   PopoverTrigger,
   PopoverContent,
 } from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
+import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
+import {
+  Command,
+  CommandInput,
+  CommandEmpty,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
 import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
@@ -39,13 +48,19 @@ import { Label } from "@/components/ui/label";
 import { client } from "@/lib/trpc/client";
 import { tasksSchema } from "@/lib/zod-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { FC } from "react";
+import { useState, type FC } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import type { z } from "zod";
 import { CalendarIcon } from "lucide-react";
+import type { Project } from "@prisma/client";
 
-export const AddNewTask: FC = () => {
+type Props = {
+  projects: Project[];
+};
+
+export const AddNewTask: FC<Props> = ({ projects }) => {
+
   const form = useForm<z.infer<typeof tasksSchema>>({
     resolver: zodResolver(tasksSchema),
     defaultValues: {
@@ -53,6 +68,7 @@ export const AddNewTask: FC = () => {
       status: undefined,
       priority: undefined,
       dueDate: new Date(),
+      projectName: "",
     },
   });
 
@@ -221,6 +237,76 @@ export const AddNewTask: FC = () => {
                           }
                           initialFocus
                         />
+                      </PopoverContent>
+                    </Popover>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                name="projectName"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel>
+                      <Label>Project</Label>
+                    </FormLabel>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl className="w-full">
+                          <Button
+                            variant="outline"
+                            role="combobox"
+                            className={cn(
+                              "w-full justify-between",
+                              !field.value && "text-muted-foreground",
+                            )}
+                          >
+                            {field.value
+                              ? projects.find(
+                                  (project) =>
+                                    project.projectName === field.value,
+                                )?.projectName
+                              : "Select project"}
+                            <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-full p-0">
+                        <Command className="w-full">
+                          <CommandInput
+                            placeholder="Search projects..."
+                            className="h-9 w-full"
+                          />
+                          <CommandEmpty className="w-full">
+                            No projects found.
+                          </CommandEmpty>
+                          <CommandList className="w-full">
+                            {projects.map((project) => (
+                              <CommandItem
+                                value={project.projectName}
+                                key={project.projectName}
+                                className="w-full px-4 py-2"
+                                onSelect={() => {
+                                  form.setValue(
+                                    "projectName",
+                                    project.projectName,
+                                  );
+                                }}
+                              >
+                                {project.projectName}
+                                <CheckIcon
+                                  className={cn(
+                                    "ml-auto h-4 w-4",
+                                    project.projectName === field.value
+                                      ? "opacity-100"
+                                      : "opacity-0",
+                                  )}
+                                />
+                              </CommandItem>
+                            ))}
+                          </CommandList>
+                        </Command>
                       </PopoverContent>
                     </Popover>
                     <FormMessage />

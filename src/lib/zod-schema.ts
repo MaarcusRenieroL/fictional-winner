@@ -77,6 +77,9 @@ export const tasksSchema = z.object({
       required_error: "Due Date is required",
     }),
   ),
+  projectName: z.string({
+    required_error: "Project is required",
+  }),
 });
 
 export const projectSchema = z.object({

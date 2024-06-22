@@ -5,7 +5,7 @@ import { db } from "@/lib/db";
 import { z } from "zod";
 
 export const taskRouter = router({
-  getTasks: privateProcedure.query(async ({}) => {
+  getTasks: privateProcedure.query(async () => {
     try {
       const data = await db.task.findMany();
       return {
@@ -23,7 +23,20 @@ export const taskRouter = router({
   }),
   addTask: privateProcedure.input(tasksSchema).mutation(async ({ input }) => {
     try {
-      const { taskName, priority, status, dueDate } = input;
+      const { taskName, priority, status, dueDate, projectName } = input;
+
+      const existingProject = await db.project.findFirst({
+        where: {
+          projectName: projectName,
+        },
+      });
+
+      if (!existingProject) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Project not found",
+        });
+      }
 
       const existingTask = await db.task.findFirst({
         where: {
@@ -44,6 +57,7 @@ export const taskRouter = router({
           priority: priority,
           status: status,
           dueDate: dueDate !== undefined ? new Date(dueDate) : dueDate,
+          projectId: existingProject.id,
         },
       });
 
@@ -89,12 +103,11 @@ export const taskRouter = router({
             statusCode: 200,
             message: "Task updated successfully",
           };
-        } else {
+        }
           throw new TRPCError({
             code: "NOT_FOUND",
             message: "Task not found",
           });
-        }
       } catch (error) {
         console.log(error);
         throw new TRPCError({
