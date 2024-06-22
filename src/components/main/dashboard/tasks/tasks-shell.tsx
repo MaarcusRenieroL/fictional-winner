@@ -1,20 +1,23 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
-import { Edit } from "lucide-react";
 import React, { FC, useMemo } from "react";
 import { Tasks } from "@/lib/types";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { DataTable } from "@/components/data-table";
 import { DeleteTaskModal } from "./delete-task-modal";
 import { EditTaskModal } from "./edit-task-modal";
+import { Project } from "@prisma/client";
 
-interface TaskTableShellProps {
-  data: Tasks[];
-}
+type TaskTableShellProps = {
+  tasks: Tasks[];
+  projects?: Project[];
+};
 
-export const TaskTableShell: FC<TaskTableShellProps> = ({ data }) => {
+export const TaskTableShell: FC<TaskTableShellProps> = ({
+  tasks,
+  projects,
+}) => {
   const TasksColumnDef = useMemo<ColumnDef<Tasks>[]>(
     () => [
       {
@@ -116,6 +119,8 @@ export const TaskTableShell: FC<TaskTableShellProps> = ({ data }) => {
         cell: ({ row }) => (
           <div className="flex items-center justify-evenly min-w-max space-x-5">
             <EditTaskModal
+              projects={projects ?? []}
+              projectName={row.getValue("projectName")}
               taskName={row.getValue("taskName")}
               status={row.getValue("status")}
               priority={row.getValue("priority")}
@@ -127,11 +132,11 @@ export const TaskTableShell: FC<TaskTableShellProps> = ({ data }) => {
       },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [data],
+    [tasks],
   );
   return (
     <DataTable
-      data={data ?? []}
+      data={tasks ?? []}
       columns={TasksColumnDef}
       filterableColumns={[]}
       searchPlaceholder="Search Posts..."

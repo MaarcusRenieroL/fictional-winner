@@ -15,7 +15,7 @@ export default async function TasksPage() {
         <AddNewTask projects={projects ?? []} />
       </div>
       <div className="mt-10">
-        <TaskTableShell data={tasks} />
+        <TaskTableShell tasks={tasks ?? []} />
       </div>
     </div>
   );

@@ -23,3 +23,37 @@ export const getProjectData = async (id: string) => {
     console.log(error);
   }
 };
+
+export const getTasksByProjectId = async (id: string) => {
+  try {
+    const project = await db.project.findFirst({
+      where: {
+        id: id,
+      },
+    });
+
+    if (!project) {
+      return;
+    }
+
+    const tasks = await db.task.findMany({
+      where: {
+        projectId: project.id,
+      },
+    });
+
+    return tasks;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getProjects = async () => {
+  try {
+    const projects = await db.project.findMany();
+
+    return projects;
+  } catch (error) {
+    console.log(error);
+  }
+};

@@ -9,7 +9,6 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogClose,
 } from "@/components/ui/dialog";
 import {
   FormControl,
@@ -17,6 +16,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
+  Form,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -37,21 +37,32 @@ import {
   PopoverTrigger,
   PopoverContent,
 } from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
+import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
+import {
+  Command,
+  CommandInput,
+  CommandEmpty,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FormProvider, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import type * as z from "zod";
 import { client } from "@/lib/trpc/client";
 import { toast } from "sonner";
 import { Edit } from "lucide-react";
 import { FC } from "react";
 import { tasksSchema } from "@/lib/zod-schema";
-import { PRIORITY, STATUS } from "@prisma/client";
+import { PRIORITY, Project, STATUS } from "@prisma/client";
 
 type Props = {
   taskName: string;
   status: STATUS;
   priority: PRIORITY;
   dueDate: Date;
+  projectName: string;
+  projects: Project[];
 };
 
 export const EditTaskModal: FC<Props> = ({
@@ -59,6 +70,8 @@ export const EditTaskModal: FC<Props> = ({
   status,
   priority,
   dueDate,
+  projectName,
+  projects,
 }) => {
   const form = useForm<z.infer<typeof tasksSchema>>({
     resolver: zodResolver(tasksSchema),
@@ -67,6 +80,7 @@ export const EditTaskModal: FC<Props> = ({
       status: status,
       priority: priority,
       dueDate: dueDate,
+      projectName: projectName,
     },
   });
   const { mutateAsync: editTask } = client.task.updateTask.useMutation({
@@ -82,6 +96,7 @@ export const EditTaskModal: FC<Props> = ({
     },
   });
   const handleUpdateTask = async (data: z.infer<typeof tasksSchema>) => {
+    console.log(data);
     await editTask(data);
   };
   return (
@@ -98,7 +113,7 @@ export const EditTaskModal: FC<Props> = ({
             Fill out the form below to edit task.
           </DialogDescription>
         </DialogHeader>
-        <FormProvider {...form}>
+        <Form {...form}>
           <form onSubmit={form.handleSubmit(handleUpdateTask)}>
             <div className="flex flex-col items-center justify-between w-full gap-5">
               <FormField
@@ -239,15 +254,84 @@ export const EditTaskModal: FC<Props> = ({
                   </FormItem>
                 )}
               />
+
+              <FormField
+                name="projectName"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel>
+                      <Label>Project</Label>
+                    </FormLabel>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl className="w-full">
+                          <Button
+                            variant="outline"
+                            role="combobox"
+                            className={cn(
+                              "w-full justify-between",
+                              !field.value && "text-muted-foreground",
+                            )}
+                          >
+                            {field.value
+                              ? projects.find(
+                                  (project) =>
+                                    project.projectName === field.value,
+                                )?.projectName
+                              : projectName}
+                            <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-full p-0">
+                        <Command className="w-full" defaultValue={projectName}>
+                          <CommandInput
+                            placeholder="Search projects..."
+                            className="h-9 w-full"
+                            defaultValue={projectName}
+                          />
+                          <CommandEmpty className="w-full">
+                            No projects found.
+                          </CommandEmpty>
+                          <CommandList className="w-full">
+                            {projects.map((project) => (
+                              <CommandItem
+                                value={project.projectName}
+                                key={project.projectName}
+                                className="w-full px-4 py-2"
+                                onSelect={() => {
+                                  form.setValue(
+                                    "projectName",
+                                    project.projectName,
+                                  );
+                                }}
+                              >
+                                {project.projectName}
+                                <CheckIcon
+                                  className={cn(
+                                    "ml-auto h-4 w-4",
+                                    project.projectName === field.value
+                                      ? "opacity-100"
+                                      : "opacity-0",
+                                  )}
+                                />
+                              </CommandItem>
+                            ))}
+                          </CommandList>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
-            <DialogFooter>
-              <DialogClose asChild>
-                <Button variant="outline">Cancel</Button>
-              </DialogClose>
+            <DialogFooter className="mt-5">
               <Button type="submit">Save Changes</Button>
             </DialogFooter>
           </form>
-        </FormProvider>
+        </Form>
       </DialogContent>
     </Dialog>
   );
