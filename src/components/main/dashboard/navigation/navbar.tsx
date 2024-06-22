@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { Sidebar } from "@/components/main/dashboard/navigation/sidebar";
 import { Account } from "@/components/main/dashboard/navigation/account";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export const Navbar: FC = () => {
   return (
@@ -8,7 +9,10 @@ export const Navbar: FC = () => {
       <Sidebar />
       <div className="flex items-center justify-between w-full">
         <h1 className="text-2xl font-bold">Task Management App</h1>
-        <Account />
+        <div className="flex items-center justify-between space-x-5">
+          <ThemeToggle />
+          <Account />
+        </div>
       </div>
     </div>
   );

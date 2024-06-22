@@ -19,8 +19,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
+import { useTheme } from "next-themes";
 
 export function AppearanceForm() {
+  const { setTheme } = useTheme();
   return (
     <div className="mt-10">
       <Card>
@@ -59,7 +61,7 @@ export function AppearanceForm() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Switch />
+            <Switch onClick={() => setTheme("dark")} />
           </CardContent>
         </div>
         <CardFooter className="border-t px-6 py-2 bg-secondary justify-between">
