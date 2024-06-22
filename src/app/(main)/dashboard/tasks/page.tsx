@@ -10,7 +10,6 @@ export default async function TasksPage() {
     <div>
       <div className="flex items-center justify-between w-full">
         <h1 className="text-2xl font-bold">All tasks</h1>
-
         <AddNewTask />
       </div>
       <div className="mt-10">

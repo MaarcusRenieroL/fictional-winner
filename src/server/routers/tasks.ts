@@ -2,6 +2,7 @@ import { tasksSchema } from "@/lib/zod-schema";
 import { privateProcedure, router } from "../trpc";
 import { TRPCError } from "@trpc/server";
 import { db } from "@/lib/db";
+import { z } from "zod";
 
 export const taskRouter = router({
   getTasks: privateProcedure.query(async ({}) => {
@@ -56,6 +57,28 @@ export const taskRouter = router({
       throw new TRPCError({
         code: "INTERNAL_SERVER_ERROR",
         message: "Error adding a task",
+      });
+    }
+  }),
+  deleteTask: privateProcedure.input(z.string()).mutation(async ({ input }) => {
+    try {
+      const deletedTask = await db.task.delete({
+        where: {
+          id: input,
+        },
+      });
+
+      return {
+        success: true,
+        status: 200,
+        message: "User Deleted Successfully",
+        data: deletedTask.id,
+      };
+    } catch (error) {
+      console.log(error);
+
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
       });
     }
   }),

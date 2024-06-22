@@ -2,20 +2,18 @@
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { ColumnDef } from "@tanstack/react-table";
-import { Edit, Trash } from "lucide-react";
+import { Edit } from "lucide-react";
 import React, { FC, useMemo } from "react";
-import { useModal } from "@/components/providers/modal-provider";
 import { Tasks } from "@/lib/types";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
-import { CustomDeleteAlertDailog } from "@/components/custom-delete-alert-dialog";
 import { DataTable } from "@/components/data-table";
+import { DeleteTaskModal } from "./delete-task-modal";
 
 interface TaskTableShellProps {
   data: Tasks[];
 }
 
 export const TaskTableShell: FC<TaskTableShellProps> = ({ data }) => {
-  const { setOpen } = useModal();
   const TasksColumnDef = useMemo<ColumnDef<Tasks>[]>(
     () => [
       {
@@ -40,6 +38,14 @@ export const TaskTableShell: FC<TaskTableShellProps> = ({ data }) => {
         ),
         enableSorting: false,
         enableHiding: false,
+      },
+      {
+        id: "uniqueId",
+        cell: ({ row }) => (
+          <div className="min-w-max">{row.getValue("id")}</div>
+        ),
+        accessorKey: "id",
+        enableHiding: true,
       },
       {
         id: "taskName",
@@ -111,23 +117,7 @@ export const TaskTableShell: FC<TaskTableShellProps> = ({ data }) => {
             <Button size="icon">
               <Edit className="h-4 w-4" />
             </Button>
-            <Button
-              variant="destructive"
-              size="icon"
-              onClick={() => {
-                setOpen(
-                  <CustomDeleteAlertDailog
-                    title="Are you absolutely sure?"
-                    description="This action cannot be undone. This will permanently delete your post and remove your data from our servers"
-                    onDelete={() => {}}
-                    isDeleting={false}
-                    actionText="Delete Post"
-                  />,
-                );
-              }}
-            >
-              <Trash className="h-4 w-4" />
-            </Button>
+            <DeleteTaskModal id={row.getValue("uniqueId")} />
           </div>
         ),
       },

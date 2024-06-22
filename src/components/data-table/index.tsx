@@ -76,13 +76,10 @@ export function DataTable<TData, TValue>({
   deleteRowsAction,
 }: DataTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = React.useState({});
+
   const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>(() => {
-      const initialVisibility: VisibilityState = {};
-      visibleColumn?.forEach((col) => {
-        initialVisibility[col.id] = col.value;
-      });
-      return initialVisibility;
+    React.useState<VisibilityState>({
+      uniqueId: false,
     });
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
