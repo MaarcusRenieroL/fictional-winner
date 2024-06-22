@@ -118,4 +118,4 @@ export const getTasksByUserId = async (id: string) => {
   } catch (error) {
     console.log(error);
   }
-}
+};

@@ -12,7 +12,7 @@
 - [x] Add relation between projects and users
 - [x] Add relation between users and tasks
 - [x] Add theme toggle
-- [ ] Update dashboard with actual data
+- [x] Update dashboard with actual data
 - [ ] Seed tasks table in tasks page with data from the database
 - [ ] Block access to any other page other than the access given to the user
 - [ ] Invite team members
@@ -23,4 +23,3 @@
 - [ ] Seed users table in team members page with data from the database
 - [ ] Finish settings page
 - [ ] Add Google, Apple and Github authentication
-
