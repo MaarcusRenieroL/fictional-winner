@@ -1,9 +1,26 @@
 import { AddNewProject } from "@/components/main/dashboard/projects/add-project-modal";
 import { ProjectList } from "@/components/main/dashboard/projects/project-list";
-import { server } from "@/lib/trpc/server";
+import { getServerAuthSession } from "@/lib/auth";
+import { getProjectData, getProjectsByUserId } from "@/lib/helpers";
 
 export default async function ProjectsPage() {
-  const { data: projects } = await server.project.getProjects();
+  const session = await getServerAuthSession();
+  const assignedProjects = await getProjectsByUserId(session?.user.id ?? "");
+
+  const projects = [];
+
+  if (assignedProjects) {
+    for (const p of assignedProjects) {
+      const project = await getProjectData(p.projectId);
+
+      if (!project) {
+        return;
+      }
+
+      projects.push(project.data);
+    }
+  }
+
   return (
     <div className="w-full">
       <div className="w-full flex items-center justify-between">
@@ -11,7 +28,8 @@ export default async function ProjectsPage() {
         <AddNewProject />
       </div>
       <div className="mt-5">
-        <ProjectList data={projects} />
+        {/* @ts-ignore */}
+        <ProjectList data={projects ?? []} />
       </div>
     </div>
   );

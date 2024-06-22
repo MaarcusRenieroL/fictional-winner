@@ -8,17 +8,17 @@ export const getProjectData = async (id: string) => {
       },
     });
 
-    if (project) {
-      return {
-        data: project,
-        message: "Project found",
-      };
-    } else {
+    if (!project) {
       return {
         data: null,
         message: "Project not found",
       };
     }
+
+    return {
+      data: project,
+      message: "Project found",
+    };
   } catch (error) {
     console.log(error);
   }
@@ -53,6 +53,27 @@ export const getProjects = async () => {
     const projects = await db.project.findMany();
 
     return projects;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getProjectsByUserId = async (id: string) => {
+  try {
+    const projects = await db.user.findFirst({
+      where: {
+        id: id,
+      },
+      include: {
+        projects: true,
+      },
+    });
+
+    if (!projects) {
+      return;
+    }
+
+    return projects.projects;
   } catch (error) {
     console.log(error);
   }

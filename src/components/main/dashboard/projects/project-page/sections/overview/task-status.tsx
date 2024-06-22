@@ -4,8 +4,8 @@ import { TaskTableShell } from "@/components/main/dashboard/tasks/tasks-shell";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import { FC } from "react";
-import { Project, Task } from "@prisma/client";
+import type { FC } from "react";
+import type { Project, Task } from "@prisma/client";
 
 type Props = {
   tasks: Task[];

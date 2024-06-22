@@ -1,6 +1,6 @@
-import { FC } from "react";
+import type { FC } from "react";
 import { ProjectCard } from "./project-card";
-import { Project } from "@prisma/client";
+import type { Project } from "@prisma/client";
 
 type Props = {
   data: Project[];
