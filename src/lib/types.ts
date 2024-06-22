@@ -1,6 +1,6 @@
-import { Table } from "@tanstack/react-table";
-import { LucideIcon } from "lucide-react";
-import { ComponentType } from "react";
+import type { Table } from "@tanstack/react-table";
+import type { LucideIcon } from "lucide-react";
+import type { ComponentType } from "react";
 
 export type SidebarItemsType = {
   title: string;

@@ -1,4 +1,4 @@
-import { SidebarItemsType } from "./types";
+import type { SidebarItemsType } from "./types";
 import { Icons } from "@/components/icons";
 
 export const SIDEBAR_ITEMS: SidebarItemsType[] = [
@@ -11,11 +11,6 @@ export const SIDEBAR_ITEMS: SidebarItemsType[] = [
     title: "Tasks",
     href: "/dashboard/tasks",
     icon: Icons.tasks,
-  },
-  {
-    title: "Views",
-    href: "/dashboard/views",
-    icon: Icons.calendar,
   },
   {
     title: "Projects",

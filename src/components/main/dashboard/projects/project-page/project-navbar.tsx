@@ -1,7 +1,7 @@
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { FC } from "react";
+import type { FC } from "react";
 import { Overview } from "./sections/overview";
-import { Project, Task } from "@prisma/client";
+import type { Project, Task } from "@prisma/client";
 
 type Props = {
   tasks: Task[];

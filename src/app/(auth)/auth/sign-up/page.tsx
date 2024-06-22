@@ -16,7 +16,7 @@ import { Input } from "@/components/ui/input";
 import { FaGoogle, FaGithub, FaApple } from "react-icons/fa";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import type { z } from "zod";
 import { registerSchema } from "@/lib/zod-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { client } from "@/lib/trpc/client";

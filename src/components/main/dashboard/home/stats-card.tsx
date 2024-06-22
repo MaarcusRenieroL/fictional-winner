@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { FC } from "react";
+import type { FC } from "react";
 
 type Props = {
   title: string;

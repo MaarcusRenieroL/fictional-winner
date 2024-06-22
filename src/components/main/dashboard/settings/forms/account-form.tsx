@@ -9,9 +9,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Switch } from "@/components/ui/switch";
 import { Input } from "@/components/ui/input";
-import { FC } from "react";
+import type { FC } from "react";
 
 export const AccountForm: FC = () => {
   return (
@@ -25,7 +24,7 @@ export const AccountForm: FC = () => {
             Click on the avatar to upload a custom one from your files.
           </CardDescription>
         </CardHeader>
-        <div className="absolute size-16 rounded-full bg-red-100 right-6 top-6"></div>
+        <div className="absolute size-16 rounded-full bg-red-100 right-6 top-6" />
         <CardFooter className="border-t px-6 py-4 bg-secondary text-sm">
           An avatar is optional but strongly recommended.
         </CardFooter>

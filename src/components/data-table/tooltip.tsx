@@ -1,5 +1,5 @@
-import React from "react";
-import * as TooltipPrimitive from "@radix-ui/react-tooltip";
+import type { ReactNode } from "react";
+import type * as TooltipPrimitive from "@radix-ui/react-tooltip";
 
 import {
   Tooltip,
@@ -13,8 +13,8 @@ interface classNames {
   TooltipContent?: string;
 }
 interface TooltipComponentProps extends TooltipPrimitive.TooltipProps {
-  children: React.ReactNode;
-  message: string | React.ReactNode;
+  children: ReactNode;
+  message: string | ReactNode;
   side?: "top" | "right" | "bottom" | "left";
   classNames?: classNames;
 }

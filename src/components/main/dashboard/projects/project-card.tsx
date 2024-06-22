@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Link from "next/link";
-import { FC } from "react";
+import type { FC } from "react";
 
 type Props = {
   title: string;

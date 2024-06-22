@@ -43,9 +43,9 @@ import type * as z from "zod";
 import { client } from "@/lib/trpc/client";
 import { toast } from "sonner";
 import { Edit } from "lucide-react";
-import { FC } from "react";
+import type { FC } from "react";
 import { tasksSchema } from "@/lib/zod-schema";
-import { PRIORITY, Project, STATUS } from "@prisma/client";
+import type { PRIORITY, Project, STATUS } from "@prisma/client";
 
 type Props = {
   taskName: string;

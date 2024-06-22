@@ -11,7 +11,7 @@ import {
   Legend,
   Tooltip,
 } from "recharts";
-import { FC } from "react";
+import type { FC } from "react";
 
 export const TaskGraph: FC = () => {
   const data = [

@@ -1,7 +1,8 @@
 "use client";
+
 import {
-  ReactNode,
-  FC,
+  type ReactNode,
+  type FC,
   createContext,
   useContext,
   useEffect,

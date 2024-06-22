@@ -1,11 +1,11 @@
 "use client";
 
-import { TeamMembers } from "@/lib/types";
+import type { TeamMembers } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { ColumnDef } from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table";
 import { Edit, Trash } from "lucide-react";
-import React, { FC, useMemo } from "react";
+import React, { type FC, useMemo } from "react";
 import { useModal } from "@/components/providers/modal-provider";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CustomDeleteAlertDailog } from "@/components/custom-delete-alert-dialog";

@@ -12,8 +12,8 @@ import {
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { format, subDays, subMonths, subYears } from "date-fns";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { HTMLAttributes, useState } from "react";
-import { DateRange } from "react-day-picker";
+import { type HTMLAttributes, useState } from "react";
+import type { DateRange } from "react-day-picker";
 
 type SubDaysType = "days" | "months" | "years";
 type PredefinedDatesTypes = {

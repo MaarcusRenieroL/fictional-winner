@@ -1,4 +1,4 @@
-import { FC } from "react";
+import type { FC } from "react";
 import { Sidebar } from "@/components/main/dashboard/navigation/sidebar";
 import { Account } from "@/components/main/dashboard/navigation/account";
 import { ThemeToggle } from "@/components/theme-toggle";

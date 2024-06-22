@@ -1,4 +1,4 @@
-import { FC, ReactNode } from "react";
+import type { FC, ReactNode } from "react";
 import ModalProvider from "./modal-provider";
 import { TRPCProvider } from "./trpc-provider";
 import { Toaster } from "sonner";

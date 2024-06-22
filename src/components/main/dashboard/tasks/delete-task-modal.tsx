@@ -14,7 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { client } from "@/lib/trpc/client";
 import { TrashIcon } from "lucide-react";
-import { FC } from "react";
+import type { FC } from "react";
 import { toast } from "sonner";
 
 type Props = {

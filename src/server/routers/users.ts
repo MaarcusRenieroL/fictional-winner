@@ -44,11 +44,11 @@ export const userRouter = router({
         message: "User created succesfully",
       };
     } catch (error) {
+      console.log(error);
       throw new TRPCError({
         code: "INTERNAL_SERVER_ERROR",
         message: "Error creating user",
       });
-      console.log(error);
     }
   }),
 });

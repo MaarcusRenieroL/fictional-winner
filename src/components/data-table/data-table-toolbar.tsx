@@ -2,7 +2,7 @@
 import { CalendarDateRangePicker } from "@/components/data-table/date-range-picker";
 import { TooltipComponent } from "@/components/data-table/tooltip";
 import { cn } from "@/lib/utils";
-import {
+import type {
   DataTableFilterableColumn,
   DataTableSearchableColumn,
   DataTableDownloadRowsButtonType,
@@ -10,7 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Cross2Icon } from "@radix-ui/react-icons";
-import { Table } from "@tanstack/react-table";
+import type { Table } from "@tanstack/react-table";
 import { RefreshCw } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";

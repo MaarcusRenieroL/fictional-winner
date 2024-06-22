@@ -1,5 +1,5 @@
 "use client";
-import {
+import type {
   DataTableDownloadRowsButtonType,
   DataTableFilterableColumn,
   DataTableSearchableColumn,
@@ -14,10 +14,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import {
-  ColumnDef,
-  ColumnFiltersState,
-  SortingState,
-  VisibilityState,
+  type ColumnDef,
+  type ColumnFiltersState,
+  type SortingState,
+  type VisibilityState,
   flexRender,
   getCoreRowModel,
   getFacetedRowModel,

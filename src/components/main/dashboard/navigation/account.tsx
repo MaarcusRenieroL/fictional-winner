@@ -13,7 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { signOut } from "next-auth/react";
-import { FC } from "react";
+import type { FC } from "react";
 
 export const Account: FC = () => {
   return (

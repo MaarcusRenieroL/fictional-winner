@@ -2,17 +2,21 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { TaskTableShell } from "../tasks/tasks-shell";
-import { data } from "@/lib/constants";
-import { FC } from "react";
+import type { FC } from "react";
+import type { Task } from "@prisma/client";
 
-export const TasksTable: FC = () => {
+type Props = {
+  tasks: Task[]
+}
+
+export const TasksTable: FC<Props> = ({ tasks }) => {
   return (
     <Card className="hover:shadow-xl transition-all duration-500">
       <CardHeader>
         <CardTitle>Pending Tasks</CardTitle>
       </CardHeader>
       <CardContent>
-        <TaskTableShell data={data} />
+        <TaskTableShell tasks={tasks ?? []} />
       </CardContent>
     </Card>
   );

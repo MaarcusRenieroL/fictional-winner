@@ -2,7 +2,7 @@ import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { PROJECT_LIST } from "@/lib/constants";
-import { FC } from "react";
+import type { FC } from "react";
 
 type Props = {
   id: number;

@@ -1,5 +1,5 @@
 import { endOfDay, format, isValid, parse, startOfDay } from "date-fns";
-import { DateRange } from "react-day-picker";
+import type { DateRange } from "react-day-picker";
 
 // Helper function to parse and validate a date string
 export const parseAndValidateDate = (

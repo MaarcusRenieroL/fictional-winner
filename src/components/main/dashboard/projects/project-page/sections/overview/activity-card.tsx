@@ -1,5 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { FC } from "react";
+import type { FC } from "react";
 
 export const ActivityCard: FC = () => {
   return (

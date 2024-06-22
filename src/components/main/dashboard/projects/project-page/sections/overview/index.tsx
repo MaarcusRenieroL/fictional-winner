@@ -1,7 +1,7 @@
-import { FC } from "react";
+import type { FC } from "react";
 import { RecentActivity } from "./recent-activity";
 import { TaskStatus } from "./task-status";
-import { Project, Task } from "@prisma/client";
+import type { Project, Task } from "@prisma/client";
 
 type Props = {
   tasks: Task[];

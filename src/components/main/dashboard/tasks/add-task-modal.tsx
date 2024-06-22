@@ -48,7 +48,7 @@ import { Label } from "@/components/ui/label";
 import { client } from "@/lib/trpc/client";
 import { tasksSchema } from "@/lib/zod-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState, type FC } from "react";
+import type { FC } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import type { z } from "zod";

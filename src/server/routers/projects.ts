@@ -4,7 +4,7 @@ import { TRPCError } from "@trpc/server";
 import { db } from "@/lib/db";
 
 export const projectRouter = router({
-  getProjects: privateProcedure.query(async ({}) => {
+  getProjects: privateProcedure.query(async () => {
     try {
       const tasks = await db.project.findMany();
 
@@ -54,12 +54,11 @@ export const projectRouter = router({
             statusCode: 200,
             message: "Project created succesfully",
           };
-        } else {
+        }
           throw new TRPCError({
             code: "CONFLICT",
             message: "Project already exists",
           });
-        }
       } catch (error) {
         console.log(error);
         throw new TRPCError({

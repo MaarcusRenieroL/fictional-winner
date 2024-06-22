@@ -1,6 +1,6 @@
 import { useSearchParams } from "next/navigation";
 import { useMemo } from "react";
-import { DateRange } from "react-day-picker";
+import type { DateRange } from "react-day-picker";
 import { parseAndValidateDate } from "@/lib/date";
 
 // Custom hook to get the from and to dates from the URL search parameters
@@ -17,9 +17,9 @@ export function useDateRangeFromSearchParams() {
 
     if (fromDate) {
       return { from: fromDate, to: toDate };
-    } else {
-      return undefined;
     }
+
+    return undefined;
   }, [searchParams]);
 
   const result = useMemo(

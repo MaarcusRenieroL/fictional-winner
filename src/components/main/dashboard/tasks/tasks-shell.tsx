@@ -1,16 +1,16 @@
 "use client";
+
 import { Checkbox } from "@/components/ui/checkbox";
 import type { ColumnDef } from "@tanstack/react-table";
 import React, { type FC, useMemo } from "react";
-import type { Tasks } from "@/lib/types";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { DataTable } from "@/components/data-table";
 import { DeleteTaskModal } from "./delete-task-modal";
 import { EditTaskModal } from "./edit-task-modal";
-import type { Project } from "@prisma/client";
+import type { Project, Task } from "@prisma/client";
 
 type TaskTableShellProps = {
-  tasks: Tasks[];
+  tasks: Task[];
   projects?: Project[];
 };
 
@@ -18,7 +18,7 @@ export const TaskTableShell: FC<TaskTableShellProps> = ({
   tasks,
   projects,
 }) => {
-  const TasksColumnDef = useMemo<ColumnDef<Tasks>[]>(
+  const TasksColumnDef = useMemo<ColumnDef<Task>[]>(
     () => [
       {
         id: "select",

@@ -50,7 +50,7 @@ export default async function ProjectPage() {
       <ProjectNavbar
         tasks={tasks ?? []}
         projects={projects.data ?? []}
-        userTasks={userTasks}
+        userTasks={userTasks ?? []}
       />
     </div>
   );

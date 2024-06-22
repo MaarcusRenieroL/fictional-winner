@@ -18,7 +18,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { FC } from "react";
+import type { FC } from "react";
 import { useForm } from "react-hook-form";
 
 export const NotificationsForm: FC = () => {

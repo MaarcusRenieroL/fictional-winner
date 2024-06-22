@@ -16,7 +16,7 @@ import { Input } from "@/components/ui/input";
 import { FaGoogle, FaGithub, FaApple } from "react-icons/fa";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import type { z } from "zod";
 import { loginSchema } from "@/lib/zod-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -28,9 +28,9 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { useRouter } from "next/navigation";
-import { Dispatch, SetStateAction, useState } from "react";
+import { type Dispatch, type SetStateAction, useState } from "react";
 import { toast } from "sonner";
-import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
+import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { signIn } from "next-auth/react";
 
 export default function SignInPage() {
@@ -62,12 +62,11 @@ export default function SignInPage() {
             description: response.error,
           });
           return null;
-        } else {
+        }
           toast("Logged in successfully", {
             description: "Redirecting you to your dashboard",
           });
           router.push("/dashboard");
-        }
       }
     } catch (error) {
       console.log(error);

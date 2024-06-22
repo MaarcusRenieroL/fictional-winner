@@ -14,7 +14,7 @@ import {
   DoubleArrowLeftIcon,
   DoubleArrowRightIcon,
 } from "@radix-ui/react-icons";
-import { Table } from "@tanstack/react-table";
+import type { Table } from "@tanstack/react-table";
 import { TrashIcon } from "lucide-react";
 import React from "react";
 import { CustomDeleteAlertDailog } from "@/components/custom-delete-alert-dialog";
@@ -73,7 +73,6 @@ export function DataTablePagination<TData>({
         ) : null}
       </div>
       <nav
-        role="navigation"
         aria-label="pagination"
         className="mx-auto flex w-full justify-center sm:justify-end"
       >

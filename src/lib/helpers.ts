@@ -105,3 +105,17 @@ export const getTasksByProjectIdAndUserId = async (
     return tasks;
   } catch (error) {}
 };
+
+export const getTasksByUserId = async (id: string) => {
+  try {
+    const tasks = await db.task.findMany({
+      where: {
+        userId: id,
+      },
+    });
+
+    return tasks;
+  } catch (error) {
+    console.log(error);
+  }
+}

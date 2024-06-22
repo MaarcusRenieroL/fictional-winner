@@ -6,7 +6,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { FC } from "react";
+import type { FC } from "react";
 import { ActivityCard } from "./activity-card";
 import { Button } from "@/components/ui/button";
 
