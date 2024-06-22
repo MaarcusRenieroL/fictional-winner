@@ -23,8 +23,9 @@ export const projectRouter = router({
   }),
   addProject: privateProcedure
     .input(projectSchema)
-    .mutation(async ({ input }) => {
+    .mutation(async ({ ctx, input }) => {
       try {
+        const { userId } = ctx;
         const { projectName, description } = input;
 
         const existingProject = await db.project.findFirst({
@@ -38,6 +39,13 @@ export const projectRouter = router({
             data: {
               projectName: projectName,
               description: description,
+            },
+          });
+
+          await db.usersProject.create({
+            data: {
+              userId: userId,
+              projectId: newProject.id,
             },
           });
 
