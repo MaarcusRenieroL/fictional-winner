@@ -13,7 +13,7 @@
 - [x] Add relation between users and tasks
 - [x] Add theme toggle
 - [x] Update dashboard with actual data
-- [ ] Seed tasks table in tasks page with data from the database
+- [x] Seed tasks table in tasks page with data from the database
 - [ ] Block access to any other page other than the access given to the user
 - [ ] Invite team members
 - [ ] Give access to team members alone for a particular project

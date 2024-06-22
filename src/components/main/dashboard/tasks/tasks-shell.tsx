@@ -18,6 +18,9 @@ export const TaskTableShell: FC<TaskTableShellProps> = ({
   tasks,
   projects,
 }) => {
+  const getProjectName = (id: string) => {
+    return projects?.find((project) => project.id === id)?.projectName;
+  };
   const TasksColumnDef = useMemo<ColumnDef<Task>[]>(
     () => [
       {
@@ -62,6 +65,22 @@ export const TaskTableShell: FC<TaskTableShellProps> = ({
           <div className="min-w-max mr-auto">{row.getValue("taskName")}</div>
         ),
         accessorKey: "taskName",
+        enableSorting: true,
+        enableHiding: true,
+      },
+      {
+        id: "projectId",
+        header: ({ column }) => (
+          <div>
+            <DataTableColumnHeader column={column} title="Project Name" />
+          </div>
+        ),
+        cell: ({ row }) => (
+          <div className="min-w-max mr-auto">
+            {getProjectName(row.getValue("projectId"))}
+          </div>
+        ),
+        accessorKey: "projectId",
         enableSorting: true,
         enableHiding: true,
       },
