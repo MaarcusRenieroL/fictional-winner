@@ -120,7 +120,6 @@ export const TaskTableShell: FC<TaskTableShellProps> = ({
           <div className="flex items-center justify-evenly min-w-max space-x-5">
             <EditTaskModal
               projects={projects ?? []}
-              projectName={row.getValue("projectName")}
               taskName={row.getValue("taskName")}
               status={row.getValue("status")}
               priority={row.getValue("priority")}

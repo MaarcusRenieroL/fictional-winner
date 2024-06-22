@@ -1,24 +1,20 @@
 import { AddNewProject } from "@/components/main/dashboard/projects/add-project-modal";
 import { ProjectList } from "@/components/main/dashboard/projects/project-list";
-import { getServerAuthSession } from "@/lib/auth";
-import { getProjectData, getProjectsByUserId } from "@/lib/helpers";
+import { authOptions } from "@/lib/auth";
+import { getProjectsByUserId } from "@/lib/helpers";
+import { getServerSession } from "next-auth";
 
 export default async function ProjectsPage() {
-  const session = await getServerAuthSession();
-  const assignedProjects = await getProjectsByUserId(session?.user.id ?? "");
+  const session = await getServerSession(authOptions);
 
-  const projects = [];
+  if (!session) {
+    return;
+  }
 
-  if (assignedProjects) {
-    for (const p of assignedProjects) {
-      const project = await getProjectData(p.projectId);
+  const projects = await getProjectsByUserId(session.user.id);
 
-      if (!project) {
-        return;
-      }
-
-      projects.push(project.data);
-    }
+  if (!projects) {
+    return;
   }
 
   return (
@@ -28,8 +24,7 @@ export default async function ProjectsPage() {
         <AddNewProject />
       </div>
       <div className="mt-5">
-        {/* @ts-ignore */}
-        <ProjectList data={projects ?? []} />
+        <ProjectList data={projects.data} />
       </div>
     </div>
   );

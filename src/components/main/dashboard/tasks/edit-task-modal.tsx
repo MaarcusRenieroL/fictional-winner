@@ -37,15 +37,6 @@ import {
   PopoverTrigger,
   PopoverContent,
 } from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
-import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
-import {
-  Command,
-  CommandInput,
-  CommandEmpty,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import type * as z from "zod";
@@ -61,7 +52,6 @@ type Props = {
   status: STATUS;
   priority: PRIORITY;
   dueDate: Date;
-  projectName: string;
   projects: Project[];
 };
 
@@ -70,7 +60,6 @@ export const EditTaskModal: FC<Props> = ({
   status,
   priority,
   dueDate,
-  projectName,
   projects,
 }) => {
   const form = useForm<z.infer<typeof tasksSchema>>({
@@ -80,7 +69,7 @@ export const EditTaskModal: FC<Props> = ({
       status: status,
       priority: priority,
       dueDate: dueDate,
-      projectName: projectName,
+      projectName: "",
     },
   });
   const { mutateAsync: editTask } = client.task.updateTask.useMutation({
@@ -248,78 +237,6 @@ export const EditTaskModal: FC<Props> = ({
                           }
                           initialFocus
                         />
-                      </PopoverContent>
-                    </Popover>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                name="projectName"
-                control={form.control}
-                render={({ field }) => (
-                  <FormItem className="w-full">
-                    <FormLabel>
-                      <Label>Project</Label>
-                    </FormLabel>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl className="w-full">
-                          <Button
-                            variant="outline"
-                            role="combobox"
-                            className={cn(
-                              "w-full justify-between",
-                              !field.value && "text-muted-foreground",
-                            )}
-                          >
-                            {field.value
-                              ? projects.find(
-                                  (project) =>
-                                    project.projectName === field.value,
-                                )?.projectName
-                              : projectName}
-                            <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-full p-0">
-                        <Command className="w-full" defaultValue={projectName}>
-                          <CommandInput
-                            placeholder="Search projects..."
-                            className="h-9 w-full"
-                            defaultValue={projectName}
-                          />
-                          <CommandEmpty className="w-full">
-                            No projects found.
-                          </CommandEmpty>
-                          <CommandList className="w-full">
-                            {projects.map((project) => (
-                              <CommandItem
-                                value={project.projectName}
-                                key={project.projectName}
-                                className="w-full px-4 py-2"
-                                onSelect={() => {
-                                  form.setValue(
-                                    "projectName",
-                                    project.projectName,
-                                  );
-                                }}
-                              >
-                                {project.projectName}
-                                <CheckIcon
-                                  className={cn(
-                                    "ml-auto h-4 w-4",
-                                    project.projectName === field.value
-                                      ? "opacity-100"
-                                      : "opacity-0",
-                                  )}
-                                />
-                              </CommandItem>
-                            ))}
-                          </CommandList>
-                        </Command>
                       </PopoverContent>
                     </Popover>
                     <FormMessage />

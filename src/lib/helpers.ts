@@ -48,19 +48,9 @@ export const getTasksByProjectId = async (id: string) => {
   }
 };
 
-export const getProjects = async () => {
-  try {
-    const projects = await db.project.findMany();
-
-    return projects;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 export const getProjectsByUserId = async (id: string) => {
   try {
-    const projects = await db.user.findFirst({
+    const data = await db.user.findFirst({
       where: {
         id: id,
       },
@@ -69,12 +59,49 @@ export const getProjectsByUserId = async (id: string) => {
       },
     });
 
+    if (!data) {
+      return;
+    }
+
+    const projects = [];
+    const assignedProjects = data.projects;
+
+    if (assignedProjects) {
+      for (let i = 0; i < assignedProjects.length; i++) {
+        const project = await db.project.findFirst({
+          where: {
+            id: assignedProjects[i].projectId,
+          },
+        });
+
+        if (project) {
+          projects.push(project);
+        }
+      }
+    }
+
     if (!projects) {
       return;
     }
 
-    return projects.projects;
+    return { data: projects, message: "Projects found" };
   } catch (error) {
     console.log(error);
   }
+};
+
+export const getTasksByProjectIdAndUserId = async (
+  userId: string,
+  projectId: string,
+) => {
+  try {
+    const tasks = await db.task.findMany({
+      where: {
+        userId: userId,
+        projectId: projectId,
+      },
+    });
+
+    return tasks;
+  } catch (error) {}
 };

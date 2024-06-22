@@ -10,9 +10,10 @@ import type { Project, Task } from "@prisma/client";
 type Props = {
   tasks: Task[];
   projects: Project[];
+  userTasks: Task[];
 };
 
-export const TaskStatus: FC<Props> = ({ tasks, projects }) => {
+export const TaskStatus: FC<Props> = ({ tasks, projects, userTasks }) => {
   return (
     <Card className="hover:shadow-xl transition-all duration-500">
       <CardHeader>
@@ -28,7 +29,7 @@ export const TaskStatus: FC<Props> = ({ tasks, projects }) => {
             <TaskTableShell tasks={tasks ?? []} projects={projects ?? []} />
           </TabsContent>
           <TabsContent value="my-tasks" className="mt-5">
-            My tasks
+            <TaskTableShell tasks={userTasks ?? []} />
           </TabsContent>
         </Tabs>
       </CardContent>

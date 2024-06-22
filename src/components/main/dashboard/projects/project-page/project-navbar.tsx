@@ -6,9 +6,10 @@ import { Project, Task } from "@prisma/client";
 type Props = {
   tasks: Task[];
   projects: Project[];
+  userTasks: Task[];
 };
 
-export const ProjectNavbar: FC<Props> = ({ tasks, projects }) => {
+export const ProjectNavbar: FC<Props> = ({ tasks, projects, userTasks }) => {
   return (
     <Tabs className="mt-5" defaultValue="overview">
       <TabsList className="w-full">
@@ -35,7 +36,7 @@ export const ProjectNavbar: FC<Props> = ({ tasks, projects }) => {
         </TabsTrigger>
       </TabsList>
       <TabsContent className="mt-5" value="overview">
-        <Overview tasks={tasks} projects={projects} />
+        <Overview tasks={tasks} projects={projects} userTasks={userTasks} />
       </TabsContent>
       <TabsContent className="mt-5" value="list">
         List
