@@ -60,6 +60,49 @@ export const taskRouter = router({
       });
     }
   }),
+  updateTask: privateProcedure
+    .input(tasksSchema)
+    .mutation(async ({ input }) => {
+      try {
+        const { taskName, priority, status, dueDate } = input;
+
+        const existingTask = await db.task.findFirst({
+          where: {
+            taskName: taskName,
+          },
+        });
+
+        if (existingTask) {
+          const updatedTask = await db.task.update({
+            where: {
+              id: existingTask.id,
+            },
+            data: {
+              status: status,
+              priority: priority,
+              dueDate: dueDate,
+            },
+          });
+
+          return {
+            data: updatedTask,
+            statusCode: 200,
+            message: "Task updated successfully",
+          };
+        } else {
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "Task not found",
+          });
+        }
+      } catch (error) {
+        console.log(error);
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Error updating task",
+        });
+      }
+    }),
   deleteTask: privateProcedure.input(z.string()).mutation(async ({ input }) => {
     try {
       const deletedTask = await db.task.delete({

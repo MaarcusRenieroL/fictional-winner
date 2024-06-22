@@ -71,7 +71,6 @@ export function DataTable<TData, TValue>({
         "This action cannot be undone. This will permanently delete your this data from our servers.",
     },
   },
-  visibleColumn,
   DownloadRowAction,
   deleteRowsAction,
 }: DataTableProps<TData, TValue>) {

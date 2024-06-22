@@ -8,6 +8,7 @@ import { Tasks } from "@/lib/types";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { DataTable } from "@/components/data-table";
 import { DeleteTaskModal } from "./delete-task-modal";
+import { EditTaskModal } from "./edit-task-modal";
 
 interface TaskTableShellProps {
   data: Tasks[];
@@ -114,9 +115,12 @@ export const TaskTableShell: FC<TaskTableShellProps> = ({ data }) => {
         ),
         cell: ({ row }) => (
           <div className="flex items-center justify-evenly min-w-max space-x-5">
-            <Button size="icon">
-              <Edit className="h-4 w-4" />
-            </Button>
+            <EditTaskModal
+              taskName={row.getValue("taskName")}
+              status={row.getValue("status")}
+              priority={row.getValue("priority")}
+              dueDate={row.getValue("dueDate")}
+            />
             <DeleteTaskModal id={row.getValue("uniqueId")} />
           </div>
         ),
