@@ -1,3 +1,4 @@
+import { PRIORITY, STATUS } from "@prisma/client";
 import { z } from "zod";
 
 export const registerSchema = z
@@ -54,4 +55,26 @@ export const loginSchema = z.object({
     .min(6, {
       message: "Password must be at least 6 characters long",
     }),
+});
+
+export const tasksSchema = z.object({
+  taskName: z
+    .string({
+      required_error: "Task name is required",
+    })
+    .min(4, {
+      message: "Task name should be at least 4 characters long",
+    }),
+  priority: z.nativeEnum(PRIORITY, {
+    required_error: "Priority is required",
+  }),
+  status: z.nativeEnum(STATUS, {
+    required_error: "Status is required",
+  }),
+  dueDate: z.preprocess(
+    (args) => (args === "" ? undefined : args),
+    z.coerce.date({
+      required_error: "Due Date is required",
+    }),
+  ),
 });

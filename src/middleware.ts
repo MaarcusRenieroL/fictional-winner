@@ -9,7 +9,7 @@ export default withAuth(
     const token = await getToken({ req });
     const isAuth = !!token;
 
-    const unprotectedRoutes = ["/auth/sign-in", "/auth/sign-up"];
+    const unprotectedRoutes = ["/auth/sign-in", "/auth/sign-up", "/"];
     const isApiRoute = req.nextUrl.pathname.startsWith("/api");
 
     if (!isAuth && !unprotectedRoutes.includes(pathname) && !isApiRoute) {

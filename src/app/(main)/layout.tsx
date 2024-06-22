@@ -16,11 +16,9 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <Navbar />
-        <main className="p-10">{children}</main>
-      </body>
-    </html>
+    <section>
+      <Navbar />
+      <main className="p-10">{children}</main>
+    </section>
   );
 }

@@ -14,11 +14,35 @@ datasource db {
 }
 
 model User {
-  id String @id @default(uuid())
+  id        String @id @default(uuid())
   firstName String
-  lastName String
-  email String @unique
-  password String
+  lastName  String
+  email     String @unique
+  password  String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum PRIORITY {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum STATUS {
+  NOT_STARTED
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+}
+
+model Task {
+  id       String   @id @default(uuid())
+  taskName String
+  priority PRIORITY
+  status   STATUS
+  dueDate  DateTime
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
