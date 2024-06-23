@@ -60,6 +60,9 @@ export default async function ProjectPage() {
       />
       <Separator className="mt-5" />
       <ProjectNavbar
+        users={users.map((user) => user.user) ?? []}
+        role={session.user.role ?? ""}
+        id={pathname[pathname.length - 1]}
         tasks={tasks ?? []}
         projects={projects.data ?? []}
         userTasks={userTasks ?? []}

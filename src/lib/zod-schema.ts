@@ -77,8 +77,11 @@ export const tasksSchema = z.object({
       required_error: "Due Date is required",
     }),
   ),
-  projectName: z.string({
+  projectId: z.string({
     required_error: "Project is required",
+  }),
+  userName: z.string({
+    required_error: "User required",
   }),
 });
 
@@ -133,5 +136,5 @@ export const projectMemberSchema = z.object({
     .min(2, {
       message: "Email must be at least 2 characters long",
     }),
-    projectId: z.string(),
+  projectId: z.string(),
 });

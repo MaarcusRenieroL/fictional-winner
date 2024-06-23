@@ -46,6 +46,16 @@ import { Edit } from "lucide-react";
 import type { FC } from "react";
 import { tasksSchema } from "@/lib/zod-schema";
 import type { PRIORITY, Project, STATUS } from "@prisma/client";
+import { cn } from "@/lib/utils";
+import {
+  Command,
+  CommandEmpty,
+  CommandList,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command";
+import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
+import type { User } from "@prisma/client";
 
 type Props = {
   taskName: string;
@@ -53,14 +63,19 @@ type Props = {
   priority: PRIORITY;
   dueDate: Date;
   projects: Project[];
+  users: User[];
+  role: string;
+  user: string;
 };
 
 export const EditTaskModal: FC<Props> = ({
   taskName,
   status,
+  users,
   priority,
+  role,
   dueDate,
-  projects,
+  user,
 }) => {
   const form = useForm<z.infer<typeof tasksSchema>>({
     resolver: zodResolver(tasksSchema),
@@ -69,7 +84,7 @@ export const EditTaskModal: FC<Props> = ({
       status: status,
       priority: priority,
       dueDate: dueDate,
-      projectName: "",
+      userName: user,
     },
   });
   const { mutateAsync: editTask } = client.task.updateTask.useMutation({
@@ -170,6 +185,7 @@ export const EditTaskModal: FC<Props> = ({
                 <FormField
                   name="priority"
                   control={form.control}
+                  disabled={role === "MEMBER"}
                   render={({ field }) => (
                     <FormItem className="w-full">
                       <FormLabel>
@@ -217,6 +233,7 @@ export const EditTaskModal: FC<Props> = ({
                             className={`"w-full text-left font-normal ${
                               !field.value && "text-muted-foreground"
                             }`}
+                            disabled={role === "MEMBER"}
                           >
                             {field.value ? (
                               format(field.value, "PPP")
@@ -232,14 +249,83 @@ export const EditTaskModal: FC<Props> = ({
                           mode="single"
                           selected={field.value}
                           onSelect={field.onChange}
-                          disabled={(date: Date) =>
-                            date > new Date() || date < new Date("1900-01-01")
-                          }
                           initialFocus
                         />
                       </PopoverContent>
                     </Popover>
                     <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                name="userName"
+                control={form.control}
+                disabled={role === "MEMBER"}
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel>
+                      <Label>Assign to</Label>
+                    </FormLabel>
+                    <FormControl>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <FormControl>
+                            <Button
+                              variant="outline"
+                              role="combobox"
+                              className={cn(
+                                "w-full justify-between",
+                                !field.value && "text-muted-foreground",
+                              )}
+                              disabled={role === "MEMBER"}
+                            >
+                              {field.value
+                                ? users.find(
+                                    (user) =>
+                                      user.firstName + " " + user.lastName ===
+                                      field.value,
+                                  )?.firstName
+                                : "Select user"}
+                              <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-full p-0">
+                          <Command>
+                            <CommandInput
+                              placeholder="Search crew members..."
+                              className="h-9"
+                            />
+                            <CommandEmpty>No users found.</CommandEmpty>
+                            <CommandList>
+                              {users.map((user) => (
+                                <CommandItem
+                                  value={user.firstName + " " + user.lastName}
+                                  key={user.id}
+                                  onSelect={() => {
+                                    form.setValue(
+                                      "userName",
+                                      user.firstName + " " + user.lastName,
+                                    );
+                                  }}
+                                >
+                                  {user.firstName + " " + user.lastName}
+                                  <CheckIcon
+                                    className={cn(
+                                      "ml-auto h-4 w-4",
+                                      user.firstName + " " + user.lastName ===
+                                        field.value
+                                        ? "opacity-100"
+                                        : "opacity-0",
+                                    )}
+                                  />
+                                </CommandItem>
+                              ))}
+                            </CommandList>
+                          </Command>
+                        </PopoverContent>
+                      </Popover>
+                    </FormControl>
                   </FormItem>
                 )}
               />

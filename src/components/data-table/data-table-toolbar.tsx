@@ -107,7 +107,6 @@ export function DataTableToolbar<TData>({
                 ),
             )}
         </div>
-        <CalendarDateRangePicker />
         <DataTableViewOptions table={table} />
       </div>
       {isFiltered && (

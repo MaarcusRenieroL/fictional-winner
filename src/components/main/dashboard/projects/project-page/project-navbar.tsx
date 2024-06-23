@@ -1,15 +1,25 @@
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import type { FC } from "react";
 import { Overview } from "./sections/overview";
-import type { Project, Task } from "@prisma/client";
+import type { Project, Task, User } from "@prisma/client";
 
 type Props = {
   tasks: Task[];
   projects: Project[];
   userTasks: Task[];
+  id: string;
+  role: string;
+  users: User[];
 };
 
-export const ProjectNavbar: FC<Props> = ({ tasks, projects, userTasks }) => {
+export const ProjectNavbar: FC<Props> = ({
+  tasks,
+  projects,
+  userTasks,
+  id,
+  users,
+  role,
+}) => {
   return (
     <Tabs className="mt-5" defaultValue="overview">
       <TabsList className="w-full">
@@ -36,7 +46,14 @@ export const ProjectNavbar: FC<Props> = ({ tasks, projects, userTasks }) => {
         </TabsTrigger>
       </TabsList>
       <TabsContent className="mt-5" value="overview">
-        <Overview tasks={tasks} projects={projects} userTasks={userTasks} />
+        <Overview
+          users={users}
+          role={role}
+          id={id}
+          tasks={tasks}
+          projects={projects}
+          userTasks={userTasks}
+        />
       </TabsContent>
       <TabsContent className="mt-5" value="list">
         List

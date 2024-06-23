@@ -2,6 +2,11 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import type { FC } from "react";
 import { AssignMemberModal } from "./assign-member-modal";
 import { User } from "@prisma/client";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
 
 type Props = {
   id: string;
@@ -12,13 +17,20 @@ type Props = {
 export const ProjectTeam: FC<Props> = ({ id, users, role }) => {
   return (
     <div className="mt-5 flex items-center gap-5">
-      <div className="flex items-center">
+      <div className="flex items-center space-x-5">
         {users.map((user) => (
-          <Avatar key={user.id}>
-            <AvatarFallback>
-              {user.firstName.charAt(0) + " " + user.lastName.charAt(0)}
-            </AvatarFallback>
-          </Avatar>
+          <HoverCard key={user.id}>
+            <HoverCardTrigger asChild>
+              <Avatar>
+                <AvatarFallback>
+                  {user.firstName.charAt(0) + " " + user.lastName.charAt(0)}
+                </AvatarFallback>
+              </Avatar>
+            </HoverCardTrigger>
+            <HoverCardContent>
+              {user.firstName + " " + user.lastName}
+            </HoverCardContent>
+          </HoverCard>
         ))}
       </div>
       {role && role === "ADMIN" && <AssignMemberModal projectId={id} />}

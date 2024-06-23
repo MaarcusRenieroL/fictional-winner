@@ -23,11 +23,15 @@ export const taskRouter = router({
   }),
   addTask: privateProcedure.input(tasksSchema).mutation(async ({ input }) => {
     try {
-      const { taskName, priority, status, dueDate, projectName } = input;
+      const { taskName, priority, status, dueDate, projectId, userName } =
+        input;
+
+      console.log("Username");
+      console.log(userName);
 
       const existingProject = await db.project.findFirst({
         where: {
-          projectName: projectName,
+          id: projectId,
         },
       });
 
@@ -51,6 +55,19 @@ export const taskRouter = router({
         });
       }
 
+      const user = await db.user.findFirst({
+        where: {
+          firstName: userName.split(" ")[0],
+        },
+      });
+
+      if (!user) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "User not found",
+        });
+      }
+
       const newTask = await db.task.create({
         data: {
           taskName: taskName,
@@ -58,6 +75,7 @@ export const taskRouter = router({
           status: status,
           dueDate: dueDate !== undefined ? new Date(dueDate) : dueDate,
           projectId: existingProject.id,
+          userId: user.id,
         },
       });
 
@@ -104,10 +122,10 @@ export const taskRouter = router({
             message: "Task updated successfully",
           };
         }
-          throw new TRPCError({
-            code: "NOT_FOUND",
-            message: "Task not found",
-          });
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Task not found",
+        });
       } catch (error) {
         console.log(error);
         throw new TRPCError({

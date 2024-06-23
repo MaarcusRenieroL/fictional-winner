@@ -7,17 +7,23 @@ import { DataTableColumnHeader } from "@/components/data-table/data-table-column
 import { DataTable } from "@/components/data-table";
 import { DeleteTaskModal } from "./delete-task-modal";
 import { EditTaskModal } from "./edit-task-modal";
-import type { Project, Task } from "@prisma/client";
+import type { Project, Task, User } from "@prisma/client";
+import { usePathname } from "next/navigation";
 
 type TaskTableShellProps = {
+  users?: User[];
   tasks: Task[];
   projects?: Project[];
+  role?: string;
 };
 
 export const TaskTableShell: FC<TaskTableShellProps> = ({
+  role,
   tasks,
+  users,
   projects,
 }) => {
+  const pathname = usePathname();
   const getProjectName = (id: string) => {
     return projects?.find((project) => project.id === id)?.projectName;
   };
@@ -138,6 +144,9 @@ export const TaskTableShell: FC<TaskTableShellProps> = ({
         cell: ({ row }) => (
           <div className="flex items-center justify-evenly min-w-max space-x-5">
             <EditTaskModal
+              user={row.getValue("user")}
+              role={role ?? ""}
+              users={users ?? []}
               projects={projects ?? []}
               taskName={row.getValue("taskName")}
               status={row.getValue("status")}
@@ -155,7 +164,11 @@ export const TaskTableShell: FC<TaskTableShellProps> = ({
   return (
     <DataTable
       data={tasks ?? []}
-      columns={TasksColumnDef}
+      columns={
+        pathname.includes("projects")
+          ? TasksColumnDef.filter((col) => col.id !== "projectId")
+          : TasksColumnDef
+      }
       filterableColumns={[]}
       searchPlaceholder="Search Posts..."
       messages={{

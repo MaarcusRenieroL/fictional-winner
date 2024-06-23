@@ -32,15 +32,6 @@ import {
   PopoverTrigger,
   PopoverContent,
 } from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
-import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
-import {
-  Command,
-  CommandInput,
-  CommandEmpty,
-  CommandItem,
-  CommandList,
-} from "@/components/ui/command";
 import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
@@ -53,14 +44,23 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import type { z } from "zod";
 import { CalendarIcon } from "lucide-react";
-import type { Project } from "@prisma/client";
+import { cn } from "@/lib/utils";
+import {
+  Command,
+  CommandEmpty,
+  CommandList,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command";
+import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
+import type { User } from "@prisma/client";
 
 type Props = {
-  projects: Project[];
+  id: string;
+  users: User[];
 };
 
-export const AddNewTask: FC<Props> = ({ projects }) => {
-
+export const AddNewTask: FC<Props> = ({ id, users }) => {
   const form = useForm<z.infer<typeof tasksSchema>>({
     resolver: zodResolver(tasksSchema),
     defaultValues: {
@@ -68,7 +68,8 @@ export const AddNewTask: FC<Props> = ({ projects }) => {
       status: undefined,
       priority: undefined,
       dueDate: new Date(),
-      projectName: "",
+      projectId: id,
+      userName: "",
     },
   });
 
@@ -232,9 +233,6 @@ export const AddNewTask: FC<Props> = ({ projects }) => {
                           mode="single"
                           selected={field.value}
                           onSelect={field.onChange}
-                          disabled={(date: Date) =>
-                            date > new Date() || date < new Date("1900-01-01")
-                          }
                           initialFocus
                         />
                       </PopoverContent>
@@ -244,71 +242,91 @@ export const AddNewTask: FC<Props> = ({ projects }) => {
                 )}
               />
               <FormField
-                name="projectName"
+                name="userName"
                 control={form.control}
                 render={({ field }) => (
                   <FormItem className="w-full">
                     <FormLabel>
-                      <Label>Project</Label>
+                      <Label>Assign to</Label>
                     </FormLabel>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl className="w-full">
-                          <Button
-                            variant="outline"
-                            role="combobox"
-                            className={cn(
-                              "w-full justify-between",
-                              !field.value && "text-muted-foreground",
-                            )}
-                          >
-                            {field.value
-                              ? projects.find(
-                                  (project) =>
-                                    project.projectName === field.value,
-                                )?.projectName
-                              : "Select project"}
-                            <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-full p-0">
-                        <Command className="w-full">
-                          <CommandInput
-                            placeholder="Search projects..."
-                            className="h-9 w-full"
-                          />
-                          <CommandEmpty className="w-full">
-                            No projects found.
-                          </CommandEmpty>
-                          <CommandList className="w-full">
-                            {projects.map((project) => (
-                              <CommandItem
-                                value={project.projectName}
-                                key={project.projectName}
-                                className="w-full px-4 py-2"
-                                onSelect={() => {
-                                  form.setValue(
-                                    "projectName",
-                                    project.projectName,
-                                  );
-                                }}
-                              >
-                                {project.projectName}
-                                <CheckIcon
-                                  className={cn(
-                                    "ml-auto h-4 w-4",
-                                    project.projectName === field.value
-                                      ? "opacity-100"
-                                      : "opacity-0",
-                                  )}
-                                />
-                              </CommandItem>
-                            ))}
-                          </CommandList>
-                        </Command>
-                      </PopoverContent>
-                    </Popover>
+                    <FormControl>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <FormControl>
+                            <Button
+                              variant="outline"
+                              role="combobox"
+                              className={cn(
+                                "w-full justify-between",
+                                !field.value && "text-muted-foreground",
+                              )}
+                            >
+                              {field.value
+                                ? users.find(
+                                    (user) =>
+                                      user.firstName + " " + user.lastName ===
+                                      field.value,
+                                  )?.firstName
+                                : "Select user"}
+                              <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-full p-0">
+                          <Command>
+                            <CommandInput
+                              placeholder="Search crew members..."
+                              className="h-9"
+                            />
+                            <CommandEmpty>No users found.</CommandEmpty>
+                            <CommandList>
+                              {users.map((user) => (
+                                <CommandItem
+                                  value={user.firstName + " " + user.lastName}
+                                  key={user.id}
+                                  onSelect={() => {
+                                    form.setValue(
+                                      "userName",
+                                      user.firstName + " " + user.lastName,
+                                    );
+                                  }}
+                                >
+                                  {user.firstName + " " + user.lastName}
+                                  <CheckIcon
+                                    className={cn(
+                                      "ml-auto h-4 w-4",
+                                      user.firstName + " " + user.lastName ===
+                                        field.value
+                                        ? "opacity-100"
+                                        : "opacity-0",
+                                    )}
+                                  />
+                                </CommandItem>
+                              ))}
+                            </CommandList>
+                          </Command>
+                        </PopoverContent>
+                      </Popover>
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                name="projectId"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem className="w-full hidden">
+                    <FormLabel>
+                      <Label>Task Name</Label>
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        type="text"
+                        placeholder="Enter project id"
+                        className="w-full"
+                        {...field}
+                      />
+                    </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
