@@ -143,16 +143,18 @@ export const TaskTableShell: FC<TaskTableShellProps> = ({
         ),
         cell: ({ row }) => (
           <div className="flex items-center justify-evenly min-w-max space-x-5">
-            <EditTaskModal
-              user={row.getValue("user")}
-              role={role ?? ""}
-              users={users ?? []}
-              projects={projects ?? []}
-              taskName={row.getValue("taskName")}
-              status={row.getValue("status")}
-              priority={row.getValue("priority")}
-              dueDate={row.getValue("dueDate")}
-            />
+            {!pathname.includes("tasks") && (
+              <EditTaskModal
+                user={row.getValue("user")}
+                role={role ?? ""}
+                users={users ?? []}
+                projects={projects ?? []}
+                taskName={row.getValue("taskName")}
+                status={row.getValue("status")}
+                priority={row.getValue("priority")}
+                dueDate={row.getValue("dueDate")}
+              />
+            )}
             <DeleteTaskModal id={row.getValue("uniqueId")} />
           </div>
         ),

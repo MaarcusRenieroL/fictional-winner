@@ -5,13 +5,14 @@ export const getProjectData = async (id: string) => {
     const project = await db.project.findFirst({
       where: {
         id: id,
-      }, include: {
+      },
+      include: {
         users: {
           select: {
             id: true,
-          }
+          },
         },
-      }, 
+      },
     });
 
     if (!project) {
@@ -96,6 +97,28 @@ export const getProjectsByUserId = async (id: string) => {
   }
 };
 
+export const getProjectTasks = async (id: string) => {
+  try {
+    const data = await db.user.findFirst({
+      where: {
+        id: id,
+      },
+      include: {
+        projects: true,
+        tasks: true,
+      },
+    });
+
+    if (!data) {
+      return;
+    }
+
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getTasksByProjectIdAndUserId = async (
   userId: string,
   projectId: string,
@@ -138,4 +161,5 @@ export const getUserData = async (id: string) => {
   } catch (error) {
     console.log(error);
   }
-}
+};
+

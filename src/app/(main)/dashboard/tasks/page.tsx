@@ -1,6 +1,6 @@
-import { AddNewTask } from "@/components/main/dashboard/tasks/add-task-modal";
 import { TaskTableShell } from "@/components/main/dashboard/tasks/tasks-shell";
 import { authOptions } from "@/lib/auth";
+import { db } from "@/lib/db";
 import { getProjectsByUserId } from "@/lib/helpers";
 import { server } from "@/lib/trpc/server";
 import { getServerSession } from "next-auth";
@@ -25,7 +25,6 @@ export default async function TasksPage() {
     <div>
       <div className="flex items-center justify-between w-full">
         <h1 className="text-2xl font-bold">All tasks</h1>
-        <AddNewTask projects={projects.data ?? []} />
       </div>
       <div className="mt-10">
         <TaskTableShell tasks={tasks ?? []} projects={projects.data ?? []} />

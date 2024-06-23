@@ -1,23 +1,39 @@
 import type { FC } from "react";
 import { ProjectCard } from "./project-card";
-import type { Project } from "@prisma/client";
+import type { Project, Task } from "@prisma/client";
 
 type Props = {
   data: Project[];
+  tasks: Task[];
 };
 
-export const ProjectList: FC<Props> = ({ data }) => {
+export const ProjectList: FC<Props> = ({ data, tasks }) => {
   return (
-    <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-5">
+    <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-5">
       {data.map((project) => (
         <ProjectCard
           id={project.id}
           key={project.projectName}
           title={project.projectName}
           description={project.description}
-          scheduledTaskCount={0}
-          ongoingTaskCount={0}
-          completedTaskCount={0}
+          scheduledTaskCount={
+            tasks.filter(
+              (task) =>
+                task.projectId === project.id && task.status === "NOT_STARTED",
+            ).length
+          }
+          ongoingTaskCount={
+            tasks.filter(
+              (task) =>
+                task.projectId === project.id && task.status === "IN_PROGRESS",
+            ).length
+          }
+          completedTaskCount={
+            tasks.filter(
+              (task) =>
+                task.projectId === project.id && task.status === "COMPLETED",
+            ).length
+          }
           teamMembers={[]}
         />
       ))}

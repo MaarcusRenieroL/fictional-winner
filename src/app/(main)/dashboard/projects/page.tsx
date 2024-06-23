@@ -1,7 +1,8 @@
 import { AddNewProject } from "@/components/main/dashboard/projects/add-project-modal";
 import { ProjectList } from "@/components/main/dashboard/projects/project-list";
 import { authOptions } from "@/lib/auth";
-import { getProjectsByUserId } from "@/lib/helpers";
+import { db } from "@/lib/db";
+import { getProjectsByUserId, getProjectTasks } from "@/lib/helpers";
 import { getServerSession } from "next-auth";
 
 export default async function ProjectsPage() {
@@ -12,8 +13,7 @@ export default async function ProjectsPage() {
   }
 
   const projects = await getProjectsByUserId(session.user.id);
-  console.log(session.user.email);
-  console.log(projects);
+  const tasks = await db.task.findMany();
 
   return (
     <div className="w-full">
@@ -22,7 +22,7 @@ export default async function ProjectsPage() {
         <AddNewProject />
       </div>
       <div className="mt-5">
-        <ProjectList data={projects?.data ?? []} />
+        <ProjectList data={projects?.data ?? []} tasks={tasks ?? []} />
       </div>
     </div>
   );
