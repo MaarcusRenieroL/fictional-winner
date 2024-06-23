@@ -1,6 +1,5 @@
 import { TaskTableShell } from "@/components/main/dashboard/tasks/tasks-shell";
 import { authOptions } from "@/lib/auth";
-import { db } from "@/lib/db";
 import { getProjectsByUserId } from "@/lib/helpers";
 import { server } from "@/lib/trpc/server";
 import { getServerSession } from "next-auth";

@@ -16,7 +16,7 @@ type Props = {
 
 export const ProjectTeam: FC<Props> = ({ id, users, role }) => {
   return (
-    <div className="mt-5 flex items-center gap-5">
+    <div className="flex items-center gap-5">
       <div className="flex items-center space-x-5">
         {users.map((user) => (
           <HoverCard key={user.id}>

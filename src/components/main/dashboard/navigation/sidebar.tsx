@@ -42,9 +42,7 @@ export const Sidebar: FC = () => {
                 )}
               >
                 {item.icon && <item.icon className="size-5" />}
-                <p
-                  className={`${cn("hidden text-sm  md:block transition-all duration-200 ")}`}
-                >
+                <p className={`${cn("text-sm transition-all duration-200 ")}`}>
                   {item.title}
                 </p>
               </Link>

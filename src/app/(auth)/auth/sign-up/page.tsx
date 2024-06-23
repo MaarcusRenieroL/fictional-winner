@@ -13,7 +13,6 @@ import Logo from "../../../favicon.ico";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { FaGoogle, FaGithub, FaApple } from "react-icons/fa";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
@@ -75,37 +74,6 @@ export default function SignUpPage() {
           </CardDescription>
         </CardHeader>
         <CardContent className="p-0">
-          <div className="flex items-center justify-evenly gap-5">
-            <Button
-              size="icon"
-              className="flex items-center justify-center gap-2 w-full"
-              variant="outline"
-            >
-              <FaGoogle className="h-5 w-5" />
-              <span>Google</span>
-            </Button>
-            <Button
-              size="icon"
-              className="flex items-center justify-center gap-2 w-full"
-              variant="outline"
-            >
-              <FaGithub className="h-5 w-5" />
-              <span>Github</span>
-            </Button>
-            <Button
-              size="icon"
-              className="flex items-center justify-center gap-2 w-full"
-              variant="outline"
-            >
-              <FaApple className="h-5 w-5" />
-              <span>Apple</span>
-            </Button>
-          </div>
-          <div className="flex items-center justify-center space-x-2 my-5">
-            <div className="flex-grow h-px bg-gray-300" />
-            <span className="text-sm text-gray-600">or</span>
-            <div className="flex-grow h-px bg-gray-300" />
-          </div>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(handleSignUp)}>
               <div className="space-y-2">

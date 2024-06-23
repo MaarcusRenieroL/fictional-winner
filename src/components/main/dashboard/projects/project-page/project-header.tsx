@@ -1,14 +1,4 @@
 import type { FC } from "react";
-import {
-  Select,
-  SelectValue,
-  SelectTrigger,
-  SelectContent,
-  SelectGroup,
-  SelectLabel,
-  SelectItem,
-} from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
 
 type Props = {
   title: string;
@@ -19,25 +9,7 @@ export const ProjectHeader: FC<Props> = ({ title }) => {
     <div className="flex items-center justify-between">
       <div className="flex items-center w-full gap-5">
         <h1 className="text-2xl font-bold">{title}</h1>
-        <Select>
-          <SelectTrigger className="w-48">
-            <SelectValue
-              defaultValue="not-started"
-              placeholder="Select Progress"
-            />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup defaultValue="not-started">
-              <SelectLabel>Progress</SelectLabel>
-              <SelectItem value="not-started">Not Started</SelectItem>
-              <SelectItem value="in-progress">In Progress</SelectItem>
-              <SelectItem value="completed">Completed</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-        <p className="text-sm">Last updated on: 21 December 2023</p>
       </div>
-      <Input className="w-96" placeholder="Search" />
     </div>
   );
 };

@@ -172,14 +172,14 @@ export const TaskTableShell: FC<TaskTableShellProps> = ({
           : TasksColumnDef
       }
       filterableColumns={[]}
-      searchPlaceholder="Search Posts..."
+      searchPlaceholder="Search tasks..."
       messages={{
         filteredDataNotFoundMessage: {
-          title: "No posts Found!",
+          title: "No tasks found!",
           description: "Add some posts to get started!",
         },
         emptyDataMessage: {
-          title: "No posts Found!",
+          title: "No tasks found!",
           description: "Add some posts to get started!",
         },
       }}

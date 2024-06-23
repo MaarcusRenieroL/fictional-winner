@@ -1,23 +1,36 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "../globals.css";
 import { Navbar } from "@/components/main/dashboard/navigation/navbar";
-
-const inter = Inter({ subsets: ["latin"] });
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { db } from "@/lib/db";
 
 export const metadata: Metadata = {
   title: "Task Management App",
   description: "Built using Next.js",
 };
 
-export default function DashboardLayout({
+export default async function DashboardLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    return;
+  }
+
+  const user = await db.user.findFirst({
+    where: {
+      id: session.user.id,
+    },
+  });
   return (
     <section>
-      <Navbar />
+      <Navbar
+        name={user?.firstName + " " + user?.lastName}
+        email={user?.email ?? ""}
+      />
       <main className="p-10">{children}</main>
     </section>
   );

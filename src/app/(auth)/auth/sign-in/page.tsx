@@ -13,7 +13,6 @@ import Logo from "../../../favicon.ico";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { FaGoogle, FaGithub, FaApple } from "react-icons/fa";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
@@ -63,10 +62,10 @@ export default function SignInPage() {
           });
           return null;
         }
-          toast("Logged in successfully", {
-            description: "Redirecting you to your dashboard",
-          });
-          router.push("/dashboard");
+        toast("Logged in successfully", {
+          description: "Redirecting you to your dashboard",
+        });
+        router.push("/dashboard");
       }
     } catch (error) {
       console.log(error);
@@ -94,22 +93,6 @@ export default function SignInPage() {
           </CardDescription>
         </CardHeader>
         <CardContent className="p-0">
-          <div className="flex items-center justify-evenly gap-5">
-            <Button size="icon" className="w-full" variant="outline">
-              <FaGoogle className="h-5 w-5" />
-            </Button>
-            <Button size="icon" className="w-full" variant="outline">
-              <FaGithub className="h-5 w-5" />
-            </Button>
-            <Button size="icon" className="w-full" variant="outline">
-              <FaApple className="h-5 w-5" />
-            </Button>
-          </div>
-          <div className="flex items-center justify-center space-x-2 my-5">
-            <div className="flex-grow h-px bg-gray-300" />
-            <span className="text-sm text-gray-600">or</span>
-            <div className="flex-grow h-px bg-gray-300" />
-          </div>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(handleSignIn)}>
               <div className="space-y-2">

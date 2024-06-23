@@ -52,12 +52,14 @@ export default async function ProjectPage() {
 
   return (
     <div>
-      <ProjectHeader title={projectData.data?.projectName as string} />
-      <ProjectTeam
-        role={session.user.role ?? ""}
-        id={pathname[pathname.length - 1]}
-        users={users.map((user) => user.user)}
-      />
+      <div className="flex items-center justify-between w-full">
+        <ProjectHeader title={projectData.data?.projectName as string} />
+        <ProjectTeam
+          role={session.user.role ?? ""}
+          id={pathname[pathname.length - 1]}
+          users={users.map((user) => user.user)}
+        />
+      </div>
       <Separator className="mt-5" />
       <ProjectNavbar
         users={users.map((user) => user.user) ?? []}

@@ -1,5 +1,4 @@
 import { StatsCard } from "@/components/main/dashboard/home/stats-card";
-import { TaskGraph } from "@/components/main/dashboard/home/task-graph";
 import { TasksTable } from "@/components/main/dashboard/home/tasks-table";
 import { authOptions } from "@/lib/auth";
 import { getTasksByUserId } from "@/lib/helpers";
@@ -35,8 +34,7 @@ export default async function DashboardPage() {
           difference={5}
         />
       </div>
-      <div className="mt-5 grid xl:grid-cols-2 grid-cols-1 gap-5">
-        <TaskGraph />
+      <div className="mt-10">
         <TasksTable tasks={pendingTasks ?? []} />
       </div>
     </div>
