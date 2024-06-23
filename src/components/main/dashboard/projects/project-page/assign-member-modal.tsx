@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -22,47 +21,48 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { client } from "@/lib/trpc/client";
-import { projectSchema } from "@/lib/zod-schema";
+import { projectMemberSchema } from "@/lib/zod-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
 import type { FC } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import type { z } from "zod";
 
-export const AddNewProject: FC = () => {
-  const router = useRouter();
-  const form = useForm<z.infer<typeof projectSchema>>({
-    resolver: zodResolver(projectSchema),
+type Props = {
+  projectId: string;
+}
+
+export const AssignMemberModal: FC<Props> = ({ projectId }) => {
+  const form = useForm<z.infer<typeof projectMemberSchema>>({
+    resolver: zodResolver(projectMemberSchema),
     defaultValues: {
-      projectName: "",
-      description: "",
+      email: "",
+      projectId: projectId,
     },
   });
 
-  const { mutateAsync: addNewProject } = client.project.addProject.useMutation({
+  const { mutateAsync: addNewProject } = client.team.addProjectMember.useMutation({
     onSuccess: () => {
       toast("Success", {
-        description: "Task created successfully",
+        description: "Team member added successfully",
       });
     },
     onError: (error) => {
       toast("Error", {
-        description: "Error creating task",
+        description: "Error adding team member",
       });
       console.log(error);
     },
   });
 
-  const handleAddNewTask = async (data: z.infer<typeof projectSchema>) => {
+  const handleAddNewTask = async (data: z.infer<typeof projectMemberSchema>) => {
     await addNewProject(data);
-    router.refresh();
   };
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>Add New Project</Button>
+        <Button>Add new member</Button>
       </DialogTrigger>
       <DialogContent className="max-w-4xl">
         <DialogHeader>
@@ -75,17 +75,17 @@ export const AddNewProject: FC = () => {
           <form onSubmit={form.handleSubmit(handleAddNewTask)}>
             <div className="flex flex-col items-center justify-between w-full gap-5">
               <FormField
-                name="projectName"
+                name="email"
                 control={form.control}
                 render={({ field }) => (
                   <FormItem className="w-full">
                     <FormLabel>
-                      <Label>Project Name</Label>
+                      <Label>Email</Label>
                     </FormLabel>
                     <FormControl>
                       <Input
-                        type="text"
-                        placeholder="Enter project name"
+                        type="email"
+                        placeholder="Enter email"
                         className="w-full"
                         {...field}
                       />
@@ -95,17 +95,17 @@ export const AddNewProject: FC = () => {
                 )}
               />
               <FormField
-                name="description"
+                name="projectId"
                 control={form.control}
                 render={({ field }) => (
-                  <FormItem className="w-full">
+                  <FormItem className="w-full hidden">
                     <FormLabel>
-                      <Label>Description</Label>
+                      <Label>Project Id</Label>
                     </FormLabel>
                     <FormControl>
                       <Input
                         type="text"
-                        placeholder="Enter description"
+                        placeholder="Enter project id"
                         className="w-full"
                         {...field}
                       />
@@ -116,9 +116,7 @@ export const AddNewProject: FC = () => {
               />
             </div>
             <DialogFooter className="mt-5">
-              <DialogClose asChild>
-                <Button type="submit">Save changes</Button>
-              </DialogClose>
+              <Button type="submit">Save changes</Button>
             </DialogFooter>
           </form>
         </Form>

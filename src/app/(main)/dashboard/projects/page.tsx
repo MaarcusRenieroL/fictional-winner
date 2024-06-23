@@ -12,10 +12,8 @@ export default async function ProjectsPage() {
   }
 
   const projects = await getProjectsByUserId(session.user.id);
-
-  if (!projects) {
-    return;
-  }
+  console.log(session.user.email);
+  console.log(projects);
 
   return (
     <div className="w-full">
@@ -24,7 +22,7 @@ export default async function ProjectsPage() {
         <AddNewProject />
       </div>
       <div className="mt-5">
-        <ProjectList data={projects.data} />
+        <ProjectList data={projects?.data ?? []} />
       </div>
     </div>
   );

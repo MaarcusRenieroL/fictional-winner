@@ -121,3 +121,17 @@ export const createTeamSchema = z.object({
       message: "Team name must be at least 2 characters long",
     }),
 });
+
+export const projectMemberSchema = z.object({
+  email: z
+    .string({
+      required_error: "Email is required",
+    })
+    .email({
+      message: "Invalid email",
+    })
+    .min(2, {
+      message: "Email must be at least 2 characters long",
+    }),
+    projectId: z.string(),
+});

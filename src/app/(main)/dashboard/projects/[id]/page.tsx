@@ -3,6 +3,7 @@ import { ProjectNavbar } from "@/components/main/dashboard/projects/project-page
 import { ProjectTeam } from "@/components/main/dashboard/projects/project-page/project-team";
 import { Separator } from "@/components/ui/separator";
 import { authOptions } from "@/lib/auth";
+import { db } from "@/lib/db";
 import {
   getProjectData,
   getTasksByProjectId,
@@ -40,10 +41,23 @@ export default async function ProjectPage() {
     projectData.data?.id ?? "",
   );
 
+  const users = await db.usersProject.findMany({
+    where: {
+      projectId: projectData.data?.id,
+    },
+    include: {
+      user: true,
+    },
+  });
+
   return (
     <div>
       <ProjectHeader title={projectData.data?.projectName as string} />
-      <ProjectTeam id={1} />
+      <ProjectTeam
+        role={session.user.role ?? ""}
+        id={pathname[pathname.length - 1]}
+        users={users.map((user) => user.user)}
+      />
       <Separator className="mt-5" />
       <ProjectNavbar
         tasks={tasks ?? []}

@@ -1,8 +1,11 @@
 import { TRPCError } from "@trpc/server";
 import { privateProcedure, router } from "../trpc";
 import { db } from "@/lib/db";
-import { createTeamSchema, teamMemberSchema } from "@/lib/zod-schema";
-import { TEAM_ROLE } from "@prisma/client";
+import {
+  createTeamSchema,
+  projectMemberSchema,
+  teamMemberSchema,
+} from "@/lib/zod-schema";
 
 export const teamRouter = router({
   getTeamMembers: privateProcedure.query(async ({ ctx }) => {
@@ -86,15 +89,15 @@ export const teamRouter = router({
         await db.team.update({
           where: {
             id: team.teamId ?? "",
-          }, data: {
+          },
+          data: {
             teamMembers: {
               connect: {
-                id: user.id
-              }
-            }
-          }
-        })
-
+                id: user.id,
+              },
+            },
+          },
+        });
       } catch (error) {
         console.log(error);
         throw new TRPCError({
@@ -103,7 +106,9 @@ export const teamRouter = router({
         });
       }
     }),
-    createTeam: privateProcedure.input(createTeamSchema).mutation(async ({ ctx, input }) => {
+  createTeam: privateProcedure
+    .input(createTeamSchema)
+    .mutation(async ({ ctx, input }) => {
       try {
         const { userId } = ctx;
         const { teamName } = input;
@@ -111,15 +116,16 @@ export const teamRouter = router({
         const newTeam = await db.user.update({
           where: {
             id: userId,
-          }, data: {
+          },
+          data: {
             role: "ADMIN",
             team: {
               create: {
-                teamName: teamName
-              }
-            }
-          }
-        })
+                teamName: teamName,
+              },
+            },
+          },
+        });
 
         return {
           data: newTeam,
@@ -133,5 +139,44 @@ export const teamRouter = router({
           message: "Something went wrong",
         });
       }
-    })
+    }),
+  addProjectMember: privateProcedure
+    .input(projectMemberSchema)
+    .mutation(async ({ ctx, input }) => {
+      try {
+        const { userId } = ctx;
+        const { email, projectId } = input;
+
+        const user = await db.user.findFirst({
+          where: {
+            email: email,
+          },
+          include: {
+            projects: true,
+          },
+        });
+
+        console.log(user);
+
+        if (!user) {
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "User not found",
+          });
+        }
+
+        await db.usersProject.create({
+          data: {
+            userId: user.id,
+            projectId: projectId,
+          },
+        });
+      } catch (error) {
+        console.log(error);
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Something went wrong",
+        });
+      }
+    }),
 });

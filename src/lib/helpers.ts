@@ -5,7 +5,13 @@ export const getProjectData = async (id: string) => {
     const project = await db.project.findFirst({
       where: {
         id: id,
-      },
+      }, include: {
+        users: {
+          select: {
+            id: true,
+          }
+        },
+      }, 
     });
 
     if (!project) {
@@ -119,3 +125,17 @@ export const getTasksByUserId = async (id: string) => {
     console.log(error);
   }
 };
+
+export const getUserData = async (id: string) => {
+  try {
+    const user = await db.user.findFirst({
+      where: {
+        id: id,
+      },
+    });
+
+    return user;
+  } catch (error) {
+    console.log(error);
+  }
+}
