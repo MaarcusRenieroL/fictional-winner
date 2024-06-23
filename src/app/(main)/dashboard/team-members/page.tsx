@@ -1,8 +1,17 @@
 import { TeamMembersTableShell } from "@/components/main/dashboard/team-members/team-members-shell";
 import { Button } from "@/components/ui/button";
-import { teamMembers } from "@/lib/constants";
+import { authOptions } from "@/lib/auth";
+import { server } from "@/lib/trpc/server";
+import { getServerSession } from "next-auth";
 
-export default function TeamMembersPage() {
+export default async function TeamMembersPage() {
+  const teamMembers = await server.team.getTeamMembers();
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    return;
+  }
+
   return (
     <div>
       <div className="w-full flex items-center justify-between">
@@ -10,7 +19,10 @@ export default function TeamMembersPage() {
         <Button>Download Team Members</Button>
       </div>
       <div className="mt-5">
-        <TeamMembersTableShell data={teamMembers} />
+        <TeamMembersTableShell
+          teamMembers={teamMembers.data ?? []}
+          user={session}
+        />
       </div>
     </div>
   );

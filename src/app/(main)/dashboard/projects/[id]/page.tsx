@@ -40,8 +40,6 @@ export default async function ProjectPage() {
     projectData.data?.id ?? "",
   );
 
-  console.log(userTasks);
-
   return (
     <div>
       <ProjectHeader title={projectData.data?.projectName as string} />

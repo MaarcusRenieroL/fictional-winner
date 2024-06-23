@@ -1,6 +1,5 @@
 "use client";
 
-import type { TeamMembers } from "@/lib/types";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import type { ColumnDef } from "@tanstack/react-table";
@@ -10,15 +9,18 @@ import { useModal } from "@/components/providers/modal-provider";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CustomDeleteAlertDailog } from "@/components/custom-delete-alert-dialog";
 import { DataTable } from "@/components/data-table";
+import type { User } from "@prisma/client";
+import type { Session } from "next-auth";
 
 type Props = {
-  data: TeamMembers[];
+  teamMembers: User[];
+  user: Session;
 };
 
-export const TeamMembersTableShell: FC<Props> = ({ data }) => {
+export const TeamMembersTableShell: FC<Props> = ({ teamMembers, user }) => {
   const { setOpen } = useModal();
 
-  const TeamMembersColumnDef = useMemo<ColumnDef<TeamMembers>[]>(
+  const TeamMembersColumnDef = useMemo<ColumnDef<User>[]>(
     () => [
       {
         id: "select",
@@ -86,34 +88,6 @@ export const TeamMembersTableShell: FC<Props> = ({ data }) => {
         enableHiding: true,
       },
       {
-        id: "phone",
-        header: ({ column }) => (
-          <div>
-            <DataTableColumnHeader column={column} title="Phone" />
-          </div>
-        ),
-        cell: ({ row }) => (
-          <div className="min-w-max">{row.getValue("phone")}</div>
-        ),
-        accessorKey: "phone",
-        enableSorting: true,
-        enableHiding: true,
-      },
-      {
-        id: "role",
-        header: ({ column }) => (
-          <div>
-            <DataTableColumnHeader column={column} title="Role" />
-          </div>
-        ),
-        cell: ({ row }) => (
-          <div className="min-w-max">{row.getValue("role")}</div>
-        ),
-        accessorKey: "role",
-        enableSorting: true,
-        enableHiding: true,
-      },
-      {
         id: "actions",
         header: () => (
           <div className="flex min-w-max items-center justify-center">
@@ -121,38 +95,46 @@ export const TeamMembersTableShell: FC<Props> = ({ data }) => {
           </div>
         ),
         cell: ({ row }) => (
-          <div className="flex items-center justify-evenly min-w-max space-x-5">
-            <Button size="icon">
-              <Edit className="h-4 w-4" />
-            </Button>
-            <Button
-              variant="destructive"
-              size="icon"
-              onClick={() => {
-                setOpen(
-                  <CustomDeleteAlertDailog
-                    title="Are you absolutely sure?"
-                    description="This action cannot be undone. This will permanently delete your post and remove your data from our servers"
-                    onDelete={() => {}}
-                    isDeleting={false}
-                    actionText="Delete Post"
-                  />,
-                );
-              }}
-            >
-              <Trash className="h-4 w-4" />
-            </Button>
-          </div>
+          <>
+            {row.getValue("email") === user.user.email ? (
+              <div className="h-14 flex items-center justify-evenly min-w-max">
+                You
+              </div>
+            ) : (
+              <div className="flex items-center justify-evenly min-w-max space-x-5 h-14">
+                <Button size="icon">
+                  <Edit className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant="destructive"
+                  size="icon"
+                  onClick={() => {
+                    setOpen(
+                      <CustomDeleteAlertDailog
+                        title="Are you absolutely sure?"
+                        description="This action cannot be undone. This will permanently delete your post and remove your data from our servers"
+                        onDelete={() => {}}
+                        isDeleting={false}
+                        actionText="Delete Post"
+                      />,
+                    );
+                  }}
+                >
+                  <Trash className="h-4 w-4" />
+                </Button>
+              </div>
+            )}
+          </>
         ),
       },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [data],
+    [teamMembers],
   );
 
   return (
     <DataTable
-      data={data ?? []}
+      data={teamMembers ?? []}
       columns={TeamMembersColumnDef}
       filterableColumns={[]}
       searchPlaceholder="Search members..."

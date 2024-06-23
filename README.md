@@ -22,4 +22,3 @@
 - [ ] Add progress for project
 - [ ] Seed users table in team members page with data from the database
 - [ ] Finish settings page
-- [ ] Add Google, Apple and Github authentication

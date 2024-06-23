@@ -25,6 +25,9 @@ model User {
 
   projects UsersProject[]
   tasks    Task[]
+
+  team   Team?   @relation(fields: [teamId], references: [id])
+  teamId String?
 }
 
 enum PRIORITY {
@@ -76,3 +79,9 @@ model UsersProject {
   projectId String
 }
 
+model Team {
+  id       String @id @default(uuid())
+  teamName String
+
+  teamMembers User[]
+}
