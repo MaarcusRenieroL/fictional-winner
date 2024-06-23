@@ -13,12 +13,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum TEAM_ROLE {
+  ADMIN
+  MEMBER
+}
+
 model User {
   id        String @id @default(uuid())
   firstName String
   lastName  String
   email     String @unique
   password  String
+
+  role TEAM_ROLE @default(MEMBER)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
