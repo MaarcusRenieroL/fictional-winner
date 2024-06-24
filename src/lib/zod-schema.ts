@@ -192,3 +192,57 @@ export const removeTeamMemberSchema = z.object({
   id: z.string(),
   projectId: z.string(),
 });
+
+export const deleteUserSchema = z.object({
+  id: z.string(),
+});
+
+export const changePasswordSchema = z
+  .object({
+    password: z
+      .string({
+        required_error: "Old password is required",
+      })
+      .min(6, {
+        message: "Password should at least be 6 characters long",
+      }),
+    newPassword: z
+      .string({
+        required_error: "New password is required",
+      })
+      .min(6, {
+        message: "New password should at least be 6 characters long",
+      }),
+    confirmNewPassword: z
+      .string({
+        required_error: "New password is required",
+      })
+      .min(6, {
+        message: "New password should at least be 6 characters long",
+      }),
+  })
+  .refine((data) => data.password !== data.newPassword, {
+    message: "Old and New passowrds should not be the same",
+    path: ["password"],
+  })
+  .refine((data) => data.newPassword === data.confirmNewPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"],
+  });
+
+export const changeNameSchema = z.object({
+  firstName: z
+    .string({
+      required_error: "Name is required",
+    })
+    .min(4, {
+      message: "First name must be at least 4 characters long",
+    }),
+  lastName: z
+    .string({
+      required_error: "Name is required",
+    })
+    .min(4, {
+      message: "Last name must be at least 4 characters long",
+    }),
+});
