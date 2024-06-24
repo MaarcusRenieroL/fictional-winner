@@ -483,3 +483,26 @@ export const MY_TASKS = [
     dueDate: "2024-06-30",
   },
 ];
+
+export const NAVBAR_ITEMS: SidebarItemsType[] = [
+  {
+    title: "Home",
+    href: "/",
+    icon: Icons.home,
+  },
+  {
+    title: "About",
+    href: "#about",
+    icon: Icons.about,
+  },
+  {
+    title: "Features",
+    href: "#features",
+    icon: Icons.features,
+  },
+  {
+    title: "Get Started",
+    href: "#get-started",
+    icon: Icons.getStarted,
+  },
+];

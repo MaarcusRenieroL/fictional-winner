@@ -14,11 +14,7 @@ export const Providers: FC<Props> = ({ children }) => {
     <TRPCProvider>
       <ModalProvider>
         <NextAuthProvider>
-          <ThemeProvider
-            attribute="class"
-            enableSystem
-            disableTransitionOnChange
-          >
+          <ThemeProvider attribute="class" disableTransitionOnChange>
             {children}
           </ThemeProvider>
         </NextAuthProvider>
