@@ -18,7 +18,19 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  Command,
+  CommandItem,
+  CommandList,
+  CommandEmpty,
+  CommandInput,
+} from "@/components/ui/command";
+import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
 import { client } from "@/lib/trpc/client";
 import { teamMemberSchema } from "@/lib/zod-schema";
@@ -27,8 +39,14 @@ import type { FC } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import type { z } from "zod";
+import { User } from "@prisma/client";
+import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
 
-export const AddTeamMemberModal: FC = () => {
+type Props = {
+  users: User[];
+};
+
+export const AddTeamMemberModal: FC<Props> = ({ users }) => {
   const form = useForm<z.infer<typeof teamMemberSchema>>({
     resolver: zodResolver(teamMemberSchema),
     defaultValues: {
@@ -78,12 +96,57 @@ export const AddTeamMemberModal: FC = () => {
                       <Label>Email</Label>
                     </FormLabel>
                     <FormControl>
-                      <Input
-                        type="email"
-                        placeholder="Enter email"
-                        className="w-full"
-                        {...field}
-                      />
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <FormControl>
+                            <Button
+                              variant="outline"
+                              role="combobox"
+                              className={cn(
+                                "w-full justify-between",
+                                !field.value && "text-muted-foreground",
+                              )}
+                            >
+                              {field.value
+                                ? users.find(
+                                    (user) => user.email === field.value,
+                                  )?.firstName
+                                : "Select user"}
+                              <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-full p-0">
+                          <Command>
+                            <CommandInput
+                              placeholder="Search members members..."
+                              className="h-9"
+                            />
+                            <CommandEmpty>No users found.</CommandEmpty>
+                            <CommandList>
+                              {users.map((user) => (
+                                <CommandItem
+                                  value={user.email}
+                                  key={user.id}
+                                  onSelect={() => {
+                                    form.setValue("email", user.email);
+                                  }}
+                                >
+                                  {user.email}
+                                  <CheckIcon
+                                    className={cn(
+                                      "ml-auto h-4 w-4",
+                                      user.email === field.value
+                                        ? "opacity-100"
+                                        : "opacity-0",
+                                    )}
+                                  />
+                                </CommandItem>
+                              ))}
+                            </CommandList>
+                          </Command>
+                        </PopoverContent>
+                      </Popover>
                     </FormControl>
                     <FormMessage />
                   </FormItem>

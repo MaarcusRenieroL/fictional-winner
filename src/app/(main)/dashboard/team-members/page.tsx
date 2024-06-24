@@ -23,11 +23,13 @@ export default async function TeamMembersPage() {
     },
   });
 
+  const users = await db.user.findMany();
+
   return (
     <div>
       <div className="w-full flex items-center justify-between">
         <h1 className="text-2xl font-bold">Team Members</h1>
-        <AddTeamMemberModal />
+        <AddTeamMemberModal users={users} />
       </div>
       <div className="mt-5">
         {user?.teamId && teamMembers.data && teamMembers?.data?.length ? (

@@ -33,7 +33,9 @@ export const ProjectTeam: FC<Props> = ({ id, users, role }) => {
           </HoverCard>
         ))}
       </div>
-      {role && role === "ADMIN" && <AssignMemberModal projectId={id} />}
+      {role && role === "ADMIN" && (
+        <AssignMemberModal projectId={id} users={users} />
+      )}
     </div>
   );
 };
