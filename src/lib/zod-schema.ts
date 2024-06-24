@@ -187,3 +187,8 @@ export const editTeamMemberSchema = z.object({
     required_error: "Role is required",
   }),
 });
+
+export const removeTeamMemberSchema = z.object({
+  id: z.string(),
+  projectId: z.string(),
+});

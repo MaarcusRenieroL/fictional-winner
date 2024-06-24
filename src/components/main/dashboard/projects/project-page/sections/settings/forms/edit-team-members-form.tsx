@@ -7,16 +7,25 @@ import { Session } from "next-auth";
 type Props = {
   users: User[];
   session: Session;
+  projectId: string;
 };
 
-export const EditTeamMembersForm: FC<Props> = ({ users, session }) => {
+export const EditTeamMembersForm: FC<Props> = ({
+  users,
+  session,
+  projectId,
+}) => {
   return (
     <Card className="relative">
       <CardHeader>
         <CardTitle className="text-xl">Team Members</CardTitle>
       </CardHeader>
       <CardContent>
-        <TeamMembersTableShell teamMembers={users ?? []} user={session} />
+        <TeamMembersTableShell
+          projectId={projectId}
+          teamMembers={users ?? []}
+          user={session}
+        />
       </CardContent>
     </Card>
   );

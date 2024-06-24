@@ -16,7 +16,7 @@ export const Settings: FC<Props> = ({ users, title, id, session }) => {
   return (
     <div className="space-y-10">
       <EditProjectNameForm title={title} id={id} />
-      <EditTeamMembersForm users={users} session={session} />
+      <EditTeamMembersForm projectId={id} users={users} session={session} />
       <DeleteProjectForm id={id} />
     </div>
   );

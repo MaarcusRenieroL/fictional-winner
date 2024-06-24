@@ -1,26 +1,26 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import type { ColumnDef } from "@tanstack/react-table";
-import { Edit, Trash } from "lucide-react";
 import React, { type FC, useMemo } from "react";
-import { useModal } from "@/components/providers/modal-provider";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
-import { CustomDeleteAlertDailog } from "@/components/custom-delete-alert-dialog";
 import { DataTable } from "@/components/data-table";
 import type { TEAM_ROLE, User } from "@prisma/client";
 import type { Session } from "next-auth";
 import { EditTeamMemberModal } from "./edit-team-member-modal";
+import { RemoveTeamMemberModal } from "./remove-team-member-modal";
 
 type Props = {
   teamMembers: User[];
   user: Session;
+  projectId?: string;
 };
 
-export const TeamMembersTableShell: FC<Props> = ({ teamMembers, user }) => {
-  const { setOpen } = useModal();
-
+export const TeamMembersTableShell: FC<Props> = ({
+  teamMembers,
+  user,
+  projectId,
+}) => {
   const TeamMembersColumnDef = useMemo<ColumnDef<User>[]>(
     () => [
       {
@@ -138,23 +138,10 @@ export const TeamMembersTableShell: FC<Props> = ({ teamMembers, user }) => {
                   email={row.getValue("email")}
                   role={row.getValue("role") as TEAM_ROLE}
                 />
-                <Button
-                  variant="destructive"
-                  size="icon"
-                  onClick={() => {
-                    setOpen(
-                      <CustomDeleteAlertDailog
-                        title="Are you absolutely sure?"
-                        description="This action cannot be undone. This will permanently delete your post and remove your data from our servers"
-                        onDelete={() => {}}
-                        isDeleting={false}
-                        actionText="Delete Post"
-                      />,
-                    );
-                  }}
-                >
-                  <Trash className="h-4 w-4" />
-                </Button>
+                <RemoveTeamMemberModal
+                  userId={row.getValue("id")}
+                  projectId={projectId ?? ""}
+                />
               </div>
             ) : (
               <div className="h-14 flex items-center justify-evenly min-w-max">

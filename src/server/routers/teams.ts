@@ -3,6 +3,7 @@ import { privateProcedure, router } from "../trpc";
 import { db } from "@/lib/db";
 import {
   createTeamSchema,
+  removeTeamMemberSchema,
   editTeamMemberSchema,
   projectMemberSchema,
   teamMemberSchema,
@@ -235,6 +236,79 @@ export const teamRouter = router({
           data: updatedUser,
           statusCode: 201,
           message: "User updated",
+        };
+      } catch (error) {
+        console.log(error);
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Something went wrong",
+        });
+      }
+    }),
+  removeTeamMember: privateProcedure
+    .input(removeTeamMemberSchema)
+    .mutation(async ({ ctx, input }) => {
+      try {
+        const { userId } = ctx;
+        const { id, projectId } = input;
+
+        const adminUser = await db.user.findFirst({
+          where: {
+            id: userId,
+          },
+        });
+
+        if (!adminUser) {
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "User not found",
+          });
+        }
+
+        if (adminUser.role !== "ADMIN") {
+          throw new TRPCError({
+            code: "UNAUTHORIZED",
+            message: "User should have admin access",
+          });
+        }
+
+        const existingUser = await db.user.findFirst({
+          where: {
+            id: id,
+          },
+        });
+
+        if (!existingUser) {
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "User not found",
+          });
+        }
+
+        const relation = await db.usersProject.findFirst({
+          where: {
+            userId: id,
+            projectId: projectId,
+          },
+        });
+
+        if (!relation) {
+          throw new TRPCError({
+            code: "NOT_FOUND",
+            message: "Relation not found",
+          });
+        }
+
+        const removedUser = await db.usersProject.delete({
+          where: {
+            id: relation.id,
+          },
+        });
+
+        return {
+          data: removedUser,
+          statusCode: 201,
+          message: "User removed",
         };
       } catch (error) {
         console.log(error);

@@ -17,11 +17,11 @@ export default async function TeamMembersPage() {
   const user = await db.user.findUnique({
     where: {
       id: session?.user?.id,
-    }, include: {
+    },
+    include: {
       team: true,
-    }
-  })
-
+    },
+  });
 
   return (
     <div>
@@ -35,7 +35,9 @@ export default async function TeamMembersPage() {
             teamMembers={teamMembers?.data ?? []}
             user={session}
           />
-        ) : <CreateTeamModal />}
+        ) : (
+          <CreateTeamModal />
+        )}
       </div>
     </div>
   );
