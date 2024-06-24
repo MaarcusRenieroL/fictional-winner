@@ -6,6 +6,8 @@ import { db } from "@/lib/db";
 import { server } from "@/lib/trpc/server";
 import { getServerSession } from "next-auth";
 
+export const dynamic = "force-dynamic";
+
 export default async function TeamMembersPage() {
   const teamMembers = await server.team.getTeamMembers();
   const session = await getServerSession(authOptions);

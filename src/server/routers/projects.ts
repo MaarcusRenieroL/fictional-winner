@@ -46,6 +46,15 @@ export const projectRouter = router({
             },
           });
 
+          await db.user.update({
+            where: {
+              id: userId,
+            },
+            data: {
+              role: "ADMIN",
+            },
+          });
+
           await db.usersProject.create({
             data: {
               userId: userId,

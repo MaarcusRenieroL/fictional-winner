@@ -32,8 +32,8 @@ export const FeatureSection: FC = () => {
             <div className="space-y-2">
               <h3 className="text-xl font-bold">Progress Tracking</h3>
               <p className="text-muted-foreground">
-                Monitor your team's progress and stay on top of your project\'s
-                status.
+                Monitor your team&apos;s progress and stay on top of your
+                project&apos;s status.
               </p>
             </div>
           </div>
