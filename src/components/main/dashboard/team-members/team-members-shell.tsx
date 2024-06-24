@@ -93,8 +93,9 @@ export const TeamMembersTableShell: FC<Props> = ({ teamMembers, user }) => {
           <div className="flex min-w-max items-center justify-center">
             {user.user.role === "ADMIN" ? (
               <div className="min-w-max">Actions</div>
-            ) : <div className="min-w-max">Role</div>
-            }
+            ) : (
+              <div className="min-w-max">Role</div>
+            )}
           </div>
         ),
         cell: ({ row }) => (
@@ -103,35 +104,33 @@ export const TeamMembersTableShell: FC<Props> = ({ teamMembers, user }) => {
               <div className="h-14 flex items-center justify-evenly min-w-max">
                 You
               </div>
+            ) : user.user.role === "ADMIN" ? (
+              <div className="flex items-center justify-evenly min-w-max space-x-5 h-14">
+                <Button size="icon">
+                  <Edit className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant="destructive"
+                  size="icon"
+                  onClick={() => {
+                    setOpen(
+                      <CustomDeleteAlertDailog
+                        title="Are you absolutely sure?"
+                        description="This action cannot be undone. This will permanently delete your post and remove your data from our servers"
+                        onDelete={() => {}}
+                        isDeleting={false}
+                        actionText="Delete Post"
+                      />,
+                    );
+                  }}
+                >
+                  <Trash className="h-4 w-4" />
+                </Button>
+              </div>
             ) : (
-              user.user.role === "ADMIN" ? (
-                <div className="flex items-center justify-evenly min-w-max space-x-5 h-14">
-                  <Button size="icon">
-                    <Edit className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant="destructive"
-                    size="icon"
-                    onClick={() => {
-                      setOpen(
-                        <CustomDeleteAlertDailog
-                          title="Are you absolutely sure?"
-                          description="This action cannot be undone. This will permanently delete your post and remove your data from our servers"
-                          onDelete={() => { }}
-                          isDeleting={false}
-                          actionText="Delete Post"
-                        />,
-                      );
-                    }}
-                  >
-                    <Trash className="h-4 w-4" />
-                  </Button>
-                </div>
-              ) : (
-                <div className="h-14 flex items-center justify-evenly min-w-max">
-                  {row.original.role === "ADMIN" ? "Admin" : "Member"}
-                </div>
-              )
+              <div className="h-14 flex items-center justify-evenly min-w-max">
+                {row.original.role === "ADMIN" ? "Admin" : "Member"}
+              </div>
             )}
           </>
         ),

@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 
 export const RecentActivity: FC = () => {
   return (
-    <Card className="hover:shadow-xl transition-all duration-500 w-full h-full">
+    <Card className="w-full h-full">
       <CardHeader className="w-full ">
         <CardTitle>Recent Activity</CardTitle>
       </CardHeader>

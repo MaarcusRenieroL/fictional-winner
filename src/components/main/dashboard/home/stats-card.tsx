@@ -15,7 +15,7 @@ type Props = {
 
 export const StatsCard: FC<Props> = ({ title, count, difference }) => {
   return (
-    <Card className="hover:shadow-xl transition-all duration-500">
+    <Card>
       <CardHeader>
         <CardTitle>{title}</CardTitle>
       </CardHeader>

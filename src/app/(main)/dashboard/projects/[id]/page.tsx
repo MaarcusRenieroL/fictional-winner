@@ -62,6 +62,7 @@ export default async function ProjectPage() {
       </div>
       <Separator className="mt-5" />
       <ProjectNavbar
+        title={projectData.data?.projectName as string}
         users={users.map((user) => user.user) ?? []}
         session={session}
         id={pathname[pathname.length - 1]}

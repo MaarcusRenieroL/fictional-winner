@@ -24,7 +24,7 @@ export const TaskGraph: FC = () => {
     { date: "2024-06-07", tasksCompleted: 16 },
   ];
   return (
-    <Card className="hover:shadow-xl transition-all duration-500 h-fit">
+    <Card className="h-fit">
       <CardHeader>
         <CardTitle>Total tasks done</CardTitle>
       </CardHeader>

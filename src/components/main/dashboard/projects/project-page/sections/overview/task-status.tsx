@@ -27,7 +27,7 @@ export const TaskStatus: FC<Props> = ({
   users,
 }) => {
   return (
-    <Card className="hover:shadow-xl transition-all duration-500">
+    <Card>
       <CardHeader>
         <div className="w-full flex items-center justify-between">
           <CardTitle>Task Status</CardTitle>

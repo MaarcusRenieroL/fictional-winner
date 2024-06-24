@@ -31,7 +31,7 @@ export const ProjectCard: FC<Props> = ({
 }) => {
   return (
     <Link href={`/dashboard/projects/${id}`}>
-      <Card className="flex flex-col justify-between  w-full hover:shadow-2xl transition-all duration-500">
+      <Card className="flex flex-col justify-between w-full">
         <CardHeader>
           <CardTitle>{title}</CardTitle>
           <CardDescription>{description}</CardDescription>

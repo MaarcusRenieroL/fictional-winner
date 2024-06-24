@@ -138,3 +138,21 @@ export const projectMemberSchema = z.object({
     }),
   projectId: z.string(),
 });
+
+export const editProjectNameSchema = z.object({
+  projectName: z
+    .string({
+      required_error: "Project name is required",
+    })
+    .min(4, {
+      message: "Project name must be at least 4 characters long",
+    })
+    .max(32, {
+      message: "Project name must not exceed a total of 32 characters",
+    }),
+  projectId: z.string(),
+});
+
+export const deleteProjectSchema = z.object({
+  projectId: z.string(),
+});

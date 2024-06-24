@@ -3,6 +3,7 @@ import type { FC } from "react";
 import { Overview } from "./sections/overview";
 import type { Project, Task, User } from "@prisma/client";
 import { Session } from "next-auth";
+import { Settings } from "./sections/settings";
 
 type Props = {
   tasks: Task[];
@@ -11,10 +12,12 @@ type Props = {
   id: string;
   session: Session;
   users: User[];
+  title: string;
 };
 
 export const ProjectNavbar: FC<Props> = ({
   tasks,
+  title,
   projects,
   userTasks,
   id,
@@ -48,7 +51,7 @@ export const ProjectNavbar: FC<Props> = ({
         Board
       </TabsContent>
       <TabsContent className="mt-5" value="settings">
-        Settings
+        <Settings title={title} id={id} users={users} session={session} />
       </TabsContent>
     </Tabs>
   );
