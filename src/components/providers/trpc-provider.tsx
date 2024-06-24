@@ -17,7 +17,7 @@ export const TRPCProvider: FC<Props> = ({ children }) => {
       links: [
         httpBatchLink({
           transformer: SuperJSON,
-          url: "http://localhost:3000/api/trpc",
+          url: "/api/trpc",
         }),
       ],
     }),

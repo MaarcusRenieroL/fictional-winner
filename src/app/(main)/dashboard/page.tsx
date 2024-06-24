@@ -4,6 +4,8 @@ import { authOptions } from "@/lib/auth";
 import { getTasksByUserId } from "@/lib/helpers";
 import { getServerSession } from "next-auth";
 
+export const dynamic = "force-dynamic";
+
 export default async function DashboardPage() {
   const session = await getServerSession(authOptions);
 
