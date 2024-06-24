@@ -9,8 +9,9 @@ import { useModal } from "@/components/providers/modal-provider";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { CustomDeleteAlertDailog } from "@/components/custom-delete-alert-dialog";
 import { DataTable } from "@/components/data-table";
-import type { User } from "@prisma/client";
+import type { TEAM_ROLE, User } from "@prisma/client";
 import type { Session } from "next-auth";
+import { EditTeamMemberModal } from "./edit-team-member-modal";
 
 type Props = {
   teamMembers: User[];
@@ -46,6 +47,18 @@ export const TeamMembersTableShell: FC<Props> = ({ teamMembers, user }) => {
         enableHiding: false,
       },
       {
+        id: "id",
+        header: ({ column }) => (
+          <div>
+            <DataTableColumnHeader column={column} title="Id" />
+          </div>
+        ),
+        cell: ({ row }) => (
+          <div className="min-w-max mr-auto">{row.getValue("id")}</div>
+        ),
+        accessorKey: "id",
+      },
+      {
         id: "firstName",
         header: ({ column }) => (
           <div>
@@ -72,6 +85,18 @@ export const TeamMembersTableShell: FC<Props> = ({ teamMembers, user }) => {
         accessorKey: "lastName",
         enableSorting: true,
         enableHiding: true,
+      },
+      {
+        id: "role",
+        header: ({ column }) => (
+          <div>
+            <DataTableColumnHeader column={column} title="Role" />
+          </div>
+        ),
+        cell: ({ row }) => {
+          <div className="min-w-max mr-auto">{row.getValue("role")}</div>;
+        },
+        accessorKey: "role",
       },
       {
         id: "email",
@@ -106,9 +131,13 @@ export const TeamMembersTableShell: FC<Props> = ({ teamMembers, user }) => {
               </div>
             ) : user.user.role === "ADMIN" ? (
               <div className="flex items-center justify-evenly min-w-max space-x-5 h-14">
-                <Button size="icon">
-                  <Edit className="h-4 w-4" />
-                </Button>
+                <EditTeamMemberModal
+                  id={row.getValue("id")}
+                  firstName={row.getValue("firstName")}
+                  lastName={row.getValue("lastName")}
+                  email={row.getValue("email")}
+                  role={row.getValue("role") as TEAM_ROLE}
+                />
                 <Button
                   variant="destructive"
                   size="icon"

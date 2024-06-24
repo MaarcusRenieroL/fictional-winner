@@ -1,4 +1,4 @@
-import { PRIORITY, STATUS } from "@prisma/client";
+import { PRIORITY, STATUS, TEAM_ROLE } from "@prisma/client";
 import { z } from "zod";
 
 export const registerSchema = z
@@ -155,4 +155,35 @@ export const editProjectNameSchema = z.object({
 
 export const deleteProjectSchema = z.object({
   projectId: z.string(),
+});
+
+export const editTeamMemberSchema = z.object({
+  id: z.string(),
+  firstName: z
+    .string({
+      required_error: "First name is required",
+    })
+    .min(4, {
+      message: "First name should be at least 4 characters long",
+    }),
+  lastName: z
+    .string({
+      required_error: "Last name is required",
+    })
+    .min(4, {
+      message: "Last name should be at least 4 characters long",
+    }),
+  email: z
+    .string({
+      required_error: "Email is required",
+    })
+    .email({
+      message: "Invalid email",
+    })
+    .min(2, {
+      message: "Email must be at least 2 characters long",
+    }),
+  role: z.nativeEnum(TEAM_ROLE, {
+    required_error: "Role is required",
+  }),
 });

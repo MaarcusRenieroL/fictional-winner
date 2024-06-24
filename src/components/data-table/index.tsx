@@ -79,6 +79,8 @@ export function DataTable<TData, TValue>({
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({
       uniqueId: false,
+      role: false,
+      id: false,
     });
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
