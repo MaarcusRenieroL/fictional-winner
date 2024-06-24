@@ -43,34 +43,6 @@ export function DataTablePagination<TData>({
           {table.getFilteredSelectedRowModel().rows.length} of{" "}
           {table.getFilteredRowModel().rows.length} row(s) selected.
         </span>
-        {deleteRowsAction && table.getSelectedRowModel().rows.length > 0 ? (
-          <Button
-            aria-label="Delete selected rows"
-            variant="destructive"
-            size="sm"
-            className="h-8"
-            onClick={() => {
-              setModalOpen(
-                <CustomDeleteAlertDailog
-                  title={deleteRowMessage.title}
-                  description={deleteRowMessage.description}
-                  isDeleting={isPending}
-                  onDelete={() => {
-                    startTransition(() => {
-                      table.toggleAllPageRowsSelected(false);
-                      deleteRowsAction();
-                    });
-                  }}
-                  actionText="Delete"
-                />,
-              );
-            }}
-            disabled={isPending}
-          >
-            <TrashIcon className="mr-2 size-[14px]" aria-hidden="true" />
-            Delete
-          </Button>
-        ) : null}
       </div>
       <nav
         aria-label="pagination"

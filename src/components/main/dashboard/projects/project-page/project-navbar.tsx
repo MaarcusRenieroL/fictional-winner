@@ -30,9 +30,6 @@ export const ProjectNavbar: FC<Props> = ({
         <TabsTrigger className="w-full" value="overview">
           Overview
         </TabsTrigger>
-        <TabsTrigger className="w-full" value="board">
-          Board
-        </TabsTrigger>
         <TabsTrigger className="w-full" value="settings">
           Settings
         </TabsTrigger>
@@ -46,9 +43,6 @@ export const ProjectNavbar: FC<Props> = ({
           projects={projects}
           userTasks={userTasks}
         />
-      </TabsContent>
-      <TabsContent className="mt-5" value="board">
-        Board
       </TabsContent>
       <TabsContent className="mt-5" value="settings">
         <Settings title={title} id={id} users={users} session={session} />
