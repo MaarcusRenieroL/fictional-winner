@@ -46,7 +46,7 @@ export default function SignInPage() {
   async function handlecredentialLogin(
     values: z.infer<typeof loginSchema>,
     setLoading: Dispatch<SetStateAction<boolean>>,
-    router: AppRouterInstance,
+    router: any,
   ) {
     setLoading(true);
     try {

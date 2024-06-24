@@ -13,29 +13,14 @@ export default withAuth(
     const isApiRoute = req.nextUrl.pathname.startsWith("/api");
 
     if (!isAuth && !unprotectedRoutes.includes(pathname) && !isApiRoute) {
-      return NextResponse.redirect(new URL("/auth/sign-in", req.url));
+      return NextResponse.redirect(new URL("/auth/sign-in", req.url), 302);
     }
 
     if (["/auth/sign-in", "/auth/sign-up"].includes(req.nextUrl.pathname)) {
-      if (isAuth && token.role && token.isOnboarded) {
-        return NextResponse.redirect(new URL("/dashboard", req.url));
+      if (isAuth && token.role) {
+        return NextResponse.redirect(new URL("/dashboard", req.url), 302);
       }
     }
-
-    if (isAuth) {
-      if (
-        pathname === "/auth/sign-in" ||
-        pathname === "/auth/sign-up" ||
-        pathname === "/"
-      ) {
-        return NextResponse.redirect(new URL("/dashboard", req.url));
-      }
-    }
-
-    const response = NextResponse.next();
-    response.headers.set("X-Pathname", pathname);
-
-    return response;
   },
   {
     callbacks: {
@@ -48,16 +33,5 @@ export default withAuth(
 );
 
 export const config = {
-  matcher: [
-    "/((?!api|_next/static|_next/image|favicon.ico).*)",
-    "/app/:path*",
-    "/auth/login",
-    "/admin",
-    "/super-admin",
-    "/passenger",
-    "/crew",
-    "/auth/register",
-    "/api/:path*",
-    "/verify-user",
-  ],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)", "/api/:path*"],
 };

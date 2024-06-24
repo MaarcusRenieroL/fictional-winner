@@ -3,6 +3,7 @@ import { TasksTable } from "@/components/main/dashboard/home/tasks-table";
 import { authOptions } from "@/lib/auth";
 import { getTasksByUserId } from "@/lib/helpers";
 import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
@@ -10,7 +11,7 @@ export default async function DashboardPage() {
   const session = await getServerSession(authOptions);
 
   if (!session) {
-    return;
+    redirect("/auth/sign-in");
   }
 
   const tasks = await getTasksByUserId(session.user.id);

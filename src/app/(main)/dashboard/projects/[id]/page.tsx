@@ -11,12 +11,15 @@ import {
   getTasksByProjectIdAndUserId,
 } from "@/lib/helpers";
 import { getServerSession } from "next-auth";
-import { headers } from "next/headers";
 
-export default async function ProjectPage() {
-  const headersList = headers();
-  const pathname = (headersList.get("X-Pathname") ?? "").split("/");
-  const projectData = await getProjectData(pathname[pathname.length - 1]);
+export const dynamic = "force-dynamic";
+
+export default async function ProjectPage({
+  params,
+}: {
+  params: { id: string };
+}) {
+  const projectData = await getProjectData(params.id);
 
   if (!projectData) {
     return;
@@ -56,7 +59,7 @@ export default async function ProjectPage() {
         <ProjectHeader title={projectData.data?.projectName as string} />
         <ProjectTeam
           role={session.user.role ?? ""}
-          id={pathname[pathname.length - 1]}
+          id={params.id}
           users={users.map((user) => user.user)}
         />
       </div>
@@ -65,7 +68,7 @@ export default async function ProjectPage() {
         title={projectData.data?.projectName as string}
         users={users.map((user) => user.user) ?? []}
         session={session}
-        id={pathname[pathname.length - 1]}
+        id={params.id}
         tasks={tasks ?? []}
         projects={projects.data ?? []}
         userTasks={userTasks ?? []}
