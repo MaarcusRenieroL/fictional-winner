@@ -18,21 +18,9 @@ export default async function DashboardPage() {
   return (
     <div>
       <div className="grid md:grid-cols-3 grid-cols-1 gap-5">
-        <StatsCard
-          title="Total Tasks"
-          count={tasks?.length ?? 0}
-          difference={10}
-        />
-        <StatsCard
-          title="Completed"
-          count={completedTasks?.length ?? 0}
-          difference={5}
-        />
-        <StatsCard
-          title="Overdue"
-          count={pendingTasks?.length ?? 0}
-          difference={5}
-        />
+        <StatsCard title="Total Tasks" count={tasks?.length ?? 0} />
+        <StatsCard title="Completed" count={completedTasks?.length ?? 0} />
+        <StatsCard title="Overdue" count={pendingTasks?.length ?? 0} />
       </div>
       <div className="mt-10">
         <TasksTable tasks={pendingTasks ?? []} />

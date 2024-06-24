@@ -2,6 +2,21 @@
 
 ---
 
+## Tech Stack
+
+- Next.js
+- TypeScript
+- ShadCN UI
+- Tailwind CSS
+- tRPC
+- Next Auth
+- PostgreSQL
+- Prisma
+- React Hook Form
+- Zod
+
+---
+
 - [x] Setup app with Next.js
 - [x] Setup app with Prisma
 - [x] Setup app with ShadCN UI
