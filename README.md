@@ -14,11 +14,8 @@
 - [x] Add theme toggle
 - [x] Update dashboard with actual data
 - [x] Seed tasks table in tasks page with data from the database
-- [ ] Block access to any other page other than the access given to the user
-- [ ] Invite team members
-- [ ] Give access to team members alone for a particular project
-- [ ] Add settings for projects
-- [ ] Create activity logs
-- [ ] Add progress for project
-- [ ] Seed users table in team members page with data from the database
-- [ ] Finish settings page
+- [x] Invite team members
+- [x] Give access to team members alone for a particular project
+- [x] Add settings for projects
+- [x] Seed users table in team members page with data from the database
+- [x] Finish settings page
