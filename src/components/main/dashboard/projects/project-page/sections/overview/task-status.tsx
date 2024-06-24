@@ -7,13 +7,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { FC } from "react";
 import type { Project, Task, User } from "@prisma/client";
 import { AddNewTask } from "@/components/main/dashboard/tasks/add-task-modal";
+import { Session } from "next-auth";
 
 type Props = {
   tasks: Task[];
   projects: Project[];
   userTasks: Task[];
   id: string;
-  role: string;
+  session: Session;
   users: User[];
 };
 
@@ -22,7 +23,7 @@ export const TaskStatus: FC<Props> = ({
   projects,
   userTasks,
   id,
-  role,
+  session,
   users,
 }) => {
   return (
@@ -30,7 +31,9 @@ export const TaskStatus: FC<Props> = ({
       <CardHeader>
         <div className="w-full flex items-center justify-between">
           <CardTitle>Task Status</CardTitle>
-          {role && role === "ADMIN" && <AddNewTask users={users} id={id} />}
+          {session && session.user.role === "ADMIN" && (
+            <AddNewTask users={users} id={id} />
+          )}
         </div>
       </CardHeader>
       <CardContent>
@@ -41,7 +44,7 @@ export const TaskStatus: FC<Props> = ({
           </TabsList>
           <TabsContent value="all-tasks" className="mt-5">
             <TaskTableShell
-              role={role}
+              role={session && session.user.role}
               users={users}
               tasks={tasks.filter((task) => task.status !== "COMPLETED") ?? []}
               projects={projects ?? []}
@@ -50,7 +53,12 @@ export const TaskStatus: FC<Props> = ({
           <TabsContent value="my-tasks" className="mt-5">
             <TaskTableShell
               tasks={
-                userTasks.filter((task) => task.status !== "COMPLETED") ?? []
+                userTasks.filter(
+                  (task) =>
+                    task.status !== "COMPLETED" &&
+                    session &&
+                    task.userId === session.user.id,
+                ) ?? []
               }
             />
           </TabsContent>

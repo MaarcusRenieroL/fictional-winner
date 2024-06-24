@@ -2,13 +2,14 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import type { FC } from "react";
 import { Overview } from "./sections/overview";
 import type { Project, Task, User } from "@prisma/client";
+import { Session } from "next-auth";
 
 type Props = {
   tasks: Task[];
   projects: Project[];
   userTasks: Task[];
   id: string;
-  role: string;
+  session: Session;
   users: User[];
 };
 
@@ -18,7 +19,7 @@ export const ProjectNavbar: FC<Props> = ({
   userTasks,
   id,
   users,
-  role,
+  session,
 }) => {
   return (
     <Tabs className="mt-5" defaultValue="overview">
@@ -36,7 +37,7 @@ export const ProjectNavbar: FC<Props> = ({
       <TabsContent className="mt-5" value="overview">
         <Overview
           users={users}
-          role={role}
+          session={session}
           id={id}
           tasks={tasks}
           projects={projects}

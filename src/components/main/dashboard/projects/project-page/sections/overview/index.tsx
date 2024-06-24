@@ -1,6 +1,7 @@
 import type { FC } from "react";
 import { TaskStatus } from "./task-status";
 import type { Project, Task, User } from "@prisma/client";
+import { Session } from "next-auth";
 
 type Props = {
   tasks: Task[];
@@ -8,7 +9,7 @@ type Props = {
   projects: Project[];
   userTasks: Task[];
   id: string;
-  role: string;
+  session: Session;
 };
 
 export const Overview: FC<Props> = ({
@@ -17,12 +18,12 @@ export const Overview: FC<Props> = ({
   projects,
   userTasks,
   id,
-  role,
+  session,
 }) => {
   return (
     <TaskStatus
       users={users}
-      role={role}
+      session={session}
       tasks={tasks}
       projects={projects}
       userTasks={userTasks}
